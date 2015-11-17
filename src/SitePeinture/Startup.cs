@@ -7,19 +7,31 @@ using Microsoft.AspNet.Hosting;
 using Microsoft.Framework.DependencyInjection;
 using Microsoft.Framework.Logging;
 using Microsoft.AspNet.StaticFiles;
+using Microsoft.Framework.Configuration;
+using Microsoft.Dnx.Runtime;
+using SitePeinture.Dao;
 
 namespace SitePeinture
 {
     public class Startup
     {
-        public Startup(IHostingEnvironment env)
+        public Startup(IApplicationEnvironment appEnv)
         {
+            var configurationBuilder = new ConfigurationBuilder()
+                    .SetBasePath(appEnv.ApplicationBasePath)
+                   .AddJsonFile("config.json");
+
+            this.configuration = configurationBuilder.Build();
         }
+
+        private IConfiguration configuration;
 
         // This method gets called by a runtime.
         // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IConfiguration>(_ => this.configuration);
+            services.AddTransient<DaoBase>();
             services.AddMvc();
         }
 

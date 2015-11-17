@@ -4,43 +4,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using SitePeinture.Models;
+using SitePeinture.Dao;
 
 namespace SitePeinture.Controllers
 {
     [Route("[controller]")]
     public class PaintingController : Controller
     {
+        [FromServices]
+        public DaoBase Dao { get; set; }
+
         // GET: api/values
         [HttpGet]
         public IEnumerable<Painting> Get()
         {
-            return new Painting[]
-            {
-                new Painting
-                {
-                    Title = "Tableau 1",
-                    Theme = "animaux",
-                    Filename = "4elementeau.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 2",
-                    Theme = "animaux",
-                    Filename = "4elementfeu.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 3",
-                    Theme = "animaux",
-                    Filename = "4elementterre.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 4",
-                    Theme = "animaux",
-                    Filename = "irissilk.jpg",
-                }
-            };
+            return Dao.Get();            
         }
 
         ////// GET api/values/5

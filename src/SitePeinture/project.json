@@ -9,7 +9,8 @@
     "Microsoft.AspNet.StaticFiles": "1.0.0-beta8",
     "Microsoft.Framework.Logging": "1.0.0-beta8",
     "Microsoft.Framework.Logging.Console": "1.0.0-beta8",
-    "Microsoft.Framework.Logging.Debug" : "1.0.0-beta8"
+    "Microsoft.Framework.Logging.Debug": "1.0.0-beta8",
+    "Microsoft.Framework.Configuration.Json": "1.0.0-beta8"
   },
 
   "commands": {
@@ -17,7 +18,12 @@
   },
 
   "frameworks": {
-    "dnx451": { },
+    "dnx451": {
+      "frameworkAssemblies": {
+        "System.configuration": "4.0.0.0",
+        "System.Data": "4.0.0.0"
+      }
+    },
     "dnxcore50": { }
   },
 
