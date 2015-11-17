@@ -1,0 +1,50 @@
+﻿<div class="row">
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title mouse_select" ng-click="painting = !painting">
+                    Tableaux
+                </h4>
+            </div>
+            <div class="panel-body" ng-show="painting">
+                <ng-include src="'views/admin-painting.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title mouse_select" ng-click="theme = !theme">
+                    Themes
+                </h4>
+            </div>
+            <div class="panel-body" ng-show="theme">
+                <ng-include src="'views/admin-theme.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title mouse_select" ng-click="slider = !slider">
+                    Slider
+                </h4>
+            </div>
+            <div class="panel-body" ng-show="slider">
+                <ng-include src="'views/admin-slider.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title mouse_select" ng-click="event = !event">
+                    Expositions
+                </h4>
+            </div>
+            <div class="panel-body" ng-show="event">
+                <ng-include src="'views/admin-event.html'"></ng-include>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿
+<h5>List des tableaux <i class="fa fa-plus-circle text-normal mouse_select" title="Ajouter un tableau" ng-click="Add()"></i></h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th class="hidden-sm hidden-xs">Theme</th>
+            <th class="hidden-sm hidden-xs">Nom de fichier</th>
+            <th></th>
+            <th style="width:50px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="paint in paints" ng-mouseenter="paint.display = true" ng-mouseleave="paint.display = false">
+            <td>
+                {{paint.Title}}
+            </td>
+            <td class="hidden-sm hidden-xs">
+                {{paint.Theme}}
+            </td>
+            <td class="hidden-sm hidden-xs">
+                {{paint.Filename}}
+            </td>
+            <td>
+                <img ng-src="images/tableaux/{{paint.Filename}}" class="img-responsive thumbnail" ng-show="paint.display" />
+            </td>
+            <td>
+                <i class="fa fa-pencil-square-o text-danger" ng-click="Edit(paint)"></i>
+                <i class="fa fa-minus-circle text-danger" ng-click="Edit(paint)"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/ng-template" id="EditPainting">
+    <h5>Ajout ou modification d'un tableau</h5>
+    <form class="form-horizontal" name="paintingForm">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Titre</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" ng-model="paint.Title" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="file" class="col-sm-2 control-label">Fichier</label>
+            <div class="col-sm-10">
+                <input type="file" id="file" name="file" fileread="paint.file" accept="image/*" required/>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="Save(paint)">Enregistrer</button>
+                <button type="submit" class="btn btn-default" ng-click="closeThisDialog()">Annuler</button>
+            </div>
+        </div>
+    </form>
+</script>

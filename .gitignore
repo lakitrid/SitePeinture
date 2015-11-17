@@ -210,3 +210,9 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+
+# AutoGenerate Elements
+src/SitePeinture/wwwroot/app
+src/SitePeinture/wwwroot/css
+src/SitePeinture/wwwroot/fonts
+src/SitePeinture/wwwroot/scripts
