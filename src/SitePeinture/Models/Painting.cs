@@ -14,5 +14,8 @@ namespace SitePeinture.Models
         public string Filename { get; set; }
 
         public string Data { get; set; }
+        public decimal Id { get; internal set; }
+        public decimal ThemeId { get; internal set; }
+        public string Description { get; internal set; }
     }
 }

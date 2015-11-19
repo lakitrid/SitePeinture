@@ -1,51 +1,47 @@
 ﻿using Microsoft.AspNet.Mvc;
 using Microsoft.Framework.Configuration;
+using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
-using SitePeinture.Models;
 
 namespace SitePeinture.Dao
 {
     public class DaoBase
     {
+        private string connectionString;
+
         public IConfiguration configuration { get; set; }
 
         public DaoBase(IConfiguration configuration)
         {
             this.configuration = configuration;
+            this.connectionString = configuration.Get<string>("connectionStrings:painting-local");
         }
 
-        public IEnumerable<Painting> Get()
+        protected void Execute(Action<SqlCommand> action)
         {
-            return new Painting[]
-               {
-                new Painting
+            try
+            {
+                using (SqlConnection connection = new SqlConnection(this.connectionString))
                 {
-                    Title = "Tableau 1",
-                    Theme = "animaux",
-                    Filename = "4elementeau.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 2",
-                    Theme = "animaux",
-                    Filename = "4elementfeu.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 3",
-                    Theme = "animaux",
-                    Filename = "4elementterre.jpg",
-                },
-                new Painting
-                {
-                    Title = "Tableau 4",
-                    Theme = "animaux",
-                    Filename = "irissilk.jpg",
+                    connection.Open();
+
+                    using (SqlCommand command = new SqlCommand())
+                    {
+                        command.Connection = connection;
+                        action.Invoke(command);
+                    }
+
+                    connection.Close();
                 }
-               };
+            }
+            catch (Exception exc)
+            {
+            }
         }
     }
 }

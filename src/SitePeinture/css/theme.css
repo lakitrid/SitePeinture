@@ -9,6 +9,11 @@
     max-height: 200px;
 }
 
+.small-image {
+    max-width: 400px;
+    max-height: 400px;
+}
+
 
 /* Site Name */
 

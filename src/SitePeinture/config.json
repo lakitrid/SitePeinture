@@ -1,5 +1,6 @@
 ﻿{
-  "connectionStrings" : {
-    "painting" : "server=..."
+  "connectionStrings": {
+    "painting-local": "Data Source=(localdb)\\ProjectsV12;Initial Catalog=Peinture;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
+    "painting": "Data Source=SERVER2016\\DEATHSTAR;Initial Catalog=Peinture;User Id=peinture;Password=lesdudus"
   }
 }

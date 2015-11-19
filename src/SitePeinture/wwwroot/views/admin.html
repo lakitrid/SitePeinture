@@ -6,7 +6,7 @@
                     Tableaux
                 </h4>
             </div>
-            <div class="panel-body" ng-show="painting">
+            <div class="panel-body" ng-if="painting">
                 <ng-include src="'views/admin-painting.html'"></ng-include>
             </div>
         </div>
@@ -18,7 +18,7 @@
                     Themes
                 </h4>
             </div>
-            <div class="panel-body" ng-show="theme">
+            <div class="panel-body" ng-if="theme">
                 <ng-include src="'views/admin-theme.html'"></ng-include>
             </div>
         </div>
@@ -30,7 +30,7 @@
                     Slider
                 </h4>
             </div>
-            <div class="panel-body" ng-show="slider">
+            <div class="panel-body" ng-if="slider">
                 <ng-include src="'views/admin-slider.html'"></ng-include>
             </div>
         </div>
@@ -42,7 +42,7 @@
                     Expositions
                 </h4>
             </div>
-            <div class="panel-body" ng-show="event">
+            <div class="panel-body" ng-if="event">
                 <ng-include src="'views/admin-event.html'"></ng-include>
             </div>
         </div>

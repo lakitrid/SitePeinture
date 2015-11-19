@@ -45,16 +45,52 @@
         $scope.painting = true;
 
         $scope.paints = [];
+        $scope.themes = [];
 
-        $http.get('painting').then(function (result) {
-            $scope.paints = result.data;
-        });
+        var Load = function () {
+            $http.get('painting').then(function (result) {
+                $scope.paints = result.data;
+            });
+
+            $http.get('theme').then(function (result) {
+                $scope.themes = result.data;
+            });
+        }
+
+        Load();
 
         $scope.Add = function () {
             ngDialog.open({ template: 'EditPainting', controller: 'EditPaintingController' });
         };
+
+        $scope.Edit = function (paint) {
+            ngDialog.open({ template: 'EditPainting', controller: 'EditPaintingController', data: paint })
+        };
+
+        $scope.Delete = function (paint, index) {
+
+        };
+
+        $scope.AddTheme = function () {
+            ngDialog.open({ template: 'EditTheme', controller: 'EditThemeController' });
+        };
+
+        $scope.EditTheme = function (theme) {
+            ngDialog.open({ template: 'EditTheme', controller: 'EditThemeController', data: theme })
+        };
+
+        $scope.DeleteTheme = function (theme, index) {
+
+        };
     }])
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
+        if (angular.isDefined($scope.ngDialogData)) {
+            $scope.isEdit = true;
+            $scope.paint = $scope.ngDialogData;
+        } else {
+            $scope.isEdit = false;
+        }
+
         $scope.Save = function (paint) {
             if ($scope.paintingForm.$valid) {
                 var data = {};
@@ -67,6 +103,23 @@
                 }
 
                 $http.post('painting', data).then(function () {
+                    $scope.closeThisDialog();
+                });
+            }
+        };
+    }])
+    .controller('EditThemeController', ['$scope', '$http', function ($scope, $http) {
+        if (angular.isDefined($scope.ngDialogData)) {
+            $scope.isEdit = true;
+            $scope.theme = $scope.ngDialogData;
+        } else {
+            $scope.isEdit = false;
+        }
+
+        $scope.Save = function (theme) {
+            if ($scope.paintingForm.$valid) {
+
+                $http.post('theme', theme).then(function () {
                     $scope.closeThisDialog();
                 });
             }

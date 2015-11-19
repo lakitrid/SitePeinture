@@ -12,13 +12,13 @@ namespace SitePeinture.Controllers
     public class PaintingController : Controller
     {
         [FromServices]
-        public DaoBase Dao { get; set; }
+        public DaoPainting Dao { get; set; }
 
         // GET: api/values
         [HttpGet]
         public IEnumerable<Painting> Get()
         {
-            return Dao.Get();            
+            return Dao.GetAll().ToArray();            
         }
 
         ////// GET api/values/5
