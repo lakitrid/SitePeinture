@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
-using Microsoft.Framework.Configuration;
+using Microsoft.Extensions.Configuration;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
@@ -19,7 +19,7 @@ namespace SitePeinture.Dao
         public DaoBase(IConfiguration configuration)
         {
             this.configuration = configuration;
-            this.connectionString = configuration.Get<string>("connectionStrings:painting-local");
+            this.connectionString = configuration.GetSection("connectionStrings:painting-local").Value;
         }
 
         protected void Execute(Action<SqlCommand> action)

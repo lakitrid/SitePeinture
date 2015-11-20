@@ -1,4 +1,4 @@
-﻿using Microsoft.Framework.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace SitePeinture.Dao
 
             this.Execute((command) =>
             {
-                command.CommandText = "Select * from Painting";
+                command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -48,10 +48,17 @@ namespace SitePeinture.Dao
             {
                 value.Title = reader.GetString(index);
             }
+
             index = reader.GetOrdinal("ThemeId");
             if (!reader.IsDBNull(index))
             {
                 value.ThemeId = reader.GetDecimal(index);
+            }
+
+            index = reader.GetOrdinal("ThemeTitle");
+            if (!reader.IsDBNull(index))
+            {
+                value.ThemeTitle = reader.GetString(index);
             }
 
             index = reader.GetOrdinal("Description");

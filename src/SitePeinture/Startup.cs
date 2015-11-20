@@ -1,15 +1,16 @@
-﻿using System;
+﻿using Microsoft.AspNet.Builder;
+using Microsoft.AspNet.Hosting;
+using Microsoft.AspNet.StaticFiles;
+using Microsoft.Dnx.Runtime;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.PlatformAbstractions;
+using SitePeinture.Dao;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNet.Builder;
-using Microsoft.AspNet.Hosting;
-using Microsoft.Framework.DependencyInjection;
-using Microsoft.Framework.Logging;
-using Microsoft.AspNet.StaticFiles;
-using Microsoft.Framework.Configuration;
-using Microsoft.Dnx.Runtime;
-using SitePeinture.Dao;
 
 namespace SitePeinture
 {
@@ -33,7 +34,6 @@ namespace SitePeinture
             services.AddTransient<IConfiguration>(_ => this.configuration);
             services.AddTransient<DaoPainting>();
             services.AddTransient<DaoTheme>();
-            services.AddMvc();
         }
 
         // Configure is called after ConfigureServices is called.
@@ -53,5 +53,8 @@ namespace SitePeinture
             // Add MVC to the request pipeline.
             app.UseMvc();
         }
+
+        // Entry point for the application.
+        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

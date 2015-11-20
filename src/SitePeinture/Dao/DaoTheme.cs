@@ -1,4 +1,4 @@
-﻿using Microsoft.Framework.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
