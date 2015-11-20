@@ -16,11 +16,11 @@ namespace SitePeinture
 {
     public class Startup
     {
-        public Startup(IApplicationEnvironment appEnv)
+        public Startup(IHostingEnvironment env)
         {
             var configurationBuilder = new ConfigurationBuilder()
-                    .SetBasePath(appEnv.ApplicationBasePath)
-                   .AddJsonFile("config.json");
+                   .AddJsonFile("config.json")
+                   .AddEnvironmentVariables();
 
             this.configuration = configurationBuilder.Build();
         }
@@ -34,6 +34,7 @@ namespace SitePeinture
             services.AddTransient<IConfiguration>(_ => this.configuration);
             services.AddTransient<DaoPainting>();
             services.AddTransient<DaoTheme>();
+            services.AddMvc();
         }
 
         // Configure is called after ConfigureServices is called.
