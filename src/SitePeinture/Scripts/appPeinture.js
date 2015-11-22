@@ -5,7 +5,7 @@
         'ngRoute',
         'ngDialog'
     ]).
-    config(['$routeProvider', function ($routeProvider) {
+    config(['$routeProvider', 'ngDialogProvider', function ($routeProvider, ngDialogProvider) {
         $routeProvider.
           when('/home', {
               templateUrl: 'views/home.html',
@@ -22,6 +22,13 @@
           otherwise({
               redirectTo: '/home'
           });
+
+        ngDialogProvider.setDefaults({
+            className: 'ngdialog-theme-default',
+            showClose: true,
+            closeByDocument: false,
+            closeByEscape: false
+        });
     }]).
     controller('MainController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
         $rootScope.goto = function (target) {
@@ -86,10 +93,16 @@
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
             $scope.isEdit = true;
-            $scope.paint = $scope.ngDialogData;
+            $scope.paint = angular.copy($scope.ngDialogData);
         } else {
             $scope.isEdit = false;
         }
+
+        $scope.themes = [];
+
+        $http.get('theme').then(function (result) {
+            $scope.themes = result.data;
+        });
 
         $scope.Save = function (paint) {
             if ($scope.paintingForm.$valid) {
@@ -111,10 +124,17 @@
     .controller('EditThemeController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
             $scope.isEdit = true;
-            $scope.theme = $scope.ngDialogData;
+            $scope.theme = angular.copy($scope.ngDialogData);
         } else {
             $scope.isEdit = false;
+            $scope.theme = { Id: 0 };
         }
+
+        $scope.parentThemes = [];
+
+        $http.get('theme/parents/' + $scope.theme.Id).then(function (result) {
+            $scope.parentThemes = result.data;
+        });
 
         $scope.Save = function (theme) {
             if ($scope.paintingForm.$valid) {
@@ -144,6 +164,19 @@
                         });
                     }
                     reader.readAsDataURL(changeEvent.target.files[0]);
+                });
+            }
+        }
+    }])
+    .directive("markdown", [function () {
+        return {
+            link: function (scope, element, attributes) {
+                var converter = new showdown.Converter();
+
+                scope.$watch(function () { return attributes.markdown; }, function (newValue, oldvalue) {
+                    if (angular.isDefined(attributes.markdown)) {
+                        element[0].innerHTML = converter.makeHtml(attributes.markdown);
+                    }
                 });
             }
         }
