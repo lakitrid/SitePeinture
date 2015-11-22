@@ -19,5 +19,11 @@ namespace SitePeinture.Controllers
         {
             return Dao.GetAll().ToArray();
         }
+
+        [HttpPost]
+        public void Post([FromBody] Theme theme)
+        {
+            Dao.Edit(theme);
+        }
     }
 }

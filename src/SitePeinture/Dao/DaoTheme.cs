@@ -2,6 +2,7 @@
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
@@ -31,7 +32,51 @@ namespace SitePeinture.Dao
             });
 
             return result;
+        }
 
+        public void Edit(Theme theme)
+        {
+            if (theme.Id == 0)
+            {
+                // Add the theme 
+                this.Execute((command) =>
+                {
+                    command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description]) VALUES(@parentId, @title,@description)";
+                    command.Parameters.Add("@parentId",  SqlDbType.Decimal);
+                    command.Parameters["@parentId"].Value = theme.ParentId;
+                    command.Parameters.Add("@title", SqlDbType.Text);
+                    command.Parameters["@title"].Value = theme.Title;
+                    command.Parameters.Add("@description", SqlDbType.Text);
+                    if(string.IsNullOrWhiteSpace(theme.Description))
+                    {
+                        command.Parameters["@description"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@description"].Value = theme.Description;
+                    }
+
+                    command.ExecuteNonQuery();
+                });
+            }
+            else
+            {
+                // Update the exsiting theme
+                this.Execute((command) =>
+                {
+                    command.CommandText = "UPDATE [Theme] SET [ParentId]=@parentId, [Title] = @title, [Description]=@description WHERE [Id]= @id";
+                    command.Parameters.Add("@id", SqlDbType.Decimal);
+                    command.Parameters["@id"].Value = theme.Id;
+                    command.Parameters.Add("@parentId", SqlDbType.Decimal);
+                    command.Parameters["@parentId"].Value = theme.ParentId;
+                    command.Parameters.Add("@title", SqlDbType.Text);
+                    command.Parameters["@title"].Value = theme.Title;
+                    command.Parameters.Add("@description", SqlDbType.Text);
+                    command.Parameters["@description"].Value = theme.Description;
+
+                    command.ExecuteNonQuery();
+                });
+            }
         }
 
         private Theme FillTheme(SqlDataReader reader)
