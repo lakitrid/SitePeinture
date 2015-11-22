@@ -5,6 +5,7 @@
         <tr>
             <th>Titre</th>
             <th class="hidden-sm hidden-xs">Theme</th>
+            <th class="hidden-sm hidden-xs">Slider</th>
             <th class="hidden-sm hidden-xs">Nom de fichier</th>
             <th></th>
             <th style="width:50px;"></th>
@@ -17,6 +18,9 @@
             </td>
             <td class="hidden-sm hidden-xs">
                 {{paint.ThemeTitle}}
+            </td>
+            <td class="hidden-sm hidden-xs">                
+                <input type="checkbox" ng-model="paint.OnSlider" disabled />
             </td>
             <td class="hidden-sm hidden-xs">
                 {{paint.Filename}}
@@ -60,6 +64,12 @@
                 <select class="form-control" name="theme" id="theme" ng-model="paint.ThemeId" required>
                     <option ng-repeat="theme in themes" value="{{theme.Id}}" ng-selected="paint.ThemeId == theme.Id">{{theme.Title}}</option>
                 </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Slider</label>
+            <div class="col-sm-10">
+                <input type="checkbox" class="form-control" name="slider" ng-model="paint.OnSlider">
             </div>
         </div>
         <div class="form-group">
