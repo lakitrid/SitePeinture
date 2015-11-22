@@ -21,7 +21,9 @@ namespace SitePeinture.Dao
 
             this.Execute((command) =>
             {
-                command.CommandText = "Select * from Theme";
+                command.CommandText = @"SELECT t1.Id, t1.ParentId,t1.Title, t1.Description, t2.Title AS ParentTitle
+FROM Theme AS t1
+LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -125,6 +127,18 @@ namespace SitePeinture.Dao
             if (!reader.IsDBNull(index))
             {
                 value.Description = reader.GetString(index);
+            }
+
+            index = reader.GetOrdinal("ParentId");
+            if (!reader.IsDBNull(index))
+            {
+                value.ParentId = reader.GetDecimal(index);
+            }
+
+            index = reader.GetOrdinal("ParentTitle");
+            if (!reader.IsDBNull(index))
+            {
+                value.ParentTitle = reader.GetString(index);
             }
 
             return value;

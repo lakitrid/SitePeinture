@@ -112,13 +112,11 @@
 
         $scope.Save = function (paint) {
             if ($scope.paintingForm.$valid) {
-                var data = {};
-
-                data.Title = paint.Title;
+                var data = angular.copy(paint);
 
                 if (angular.isDefined(paint.file)) {
-                    data.Title = paint.file.Filename;
-                    data.Title = paint.file.Data;
+                    data.FileName = paint.file.Filename;
+                    data.Data = paint.file.Data;
                 }
 
                 $http.post('painting', data).then(function () {

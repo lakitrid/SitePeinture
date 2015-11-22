@@ -2,7 +2,9 @@
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -24,7 +26,7 @@ namespace SitePeinture.Dao
 
                 SqlDataReader reader = command.ExecuteReader();
 
-                while(reader.Read())
+                while (reader.Read())
                 {
                     result.Add(this.FillPainting(reader));
                 }
@@ -33,12 +35,87 @@ namespace SitePeinture.Dao
             return result;
         }
 
+        public void Edit(Painting painting)
+        {
+            if (painting.IsNew)
+            {
+                // Create the file
+                string path = Path.Combine("images\\tableaux", painting.Filename);
+                if (File.Exists(path) == false)
+                {
+                    string data = painting.Data;
+                    string imageDatas = data.Split(',')[1];
+
+                    File.WriteAllBytes(path, Convert.FromBase64String(imageDatas));
+                }
+
+                this.Execute((command) =>
+                {
+                    command.CommandText = @"INSERT INTO Painting (Title, ThemeId, Description, Filename, OnSlider)
+VALUES(@title, @themeId,@description, @fileName, @onslider)";
+
+                    command.Parameters.Add("@title", SqlDbType.Text);
+                    command.Parameters.Add("@themeId", SqlDbType.Decimal);
+                    command.Parameters.Add("@description", SqlDbType.Text);
+                    command.Parameters.Add("@fileName", SqlDbType.Text);
+                    command.Parameters.Add("@onslider", SqlDbType.Bit);
+
+                    command.Parameters["@title"].Value = painting.Title;
+                    command.Parameters["@themeId"].Value = painting.ThemeId;
+                    command.Parameters["@fileName"].Value = painting.Filename;
+                    command.Parameters["@onslider"].Value = painting.OnSlider;
+                    if (string.IsNullOrWhiteSpace(painting.Description))
+                    {
+                        command.Parameters["@description"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@description"].Value = painting.Description;
+                    }
+
+                    command.ExecuteNonQuery();
+                });
+            }
+            else
+            {
+                this.Execute((command) =>
+                {
+                    command.CommandText = @"UPDATE Painting
+SET Title =@title,
+	ThemeId =@themeId,
+	Description = @description,
+	OnSlider = @onslider
+WHERE Id = @id";
+                    command.Parameters.Add("@id", SqlDbType.Decimal);
+                    command.Parameters.Add("@title", SqlDbType.Text);
+                    command.Parameters.Add("@themeId", SqlDbType.Decimal);
+                    command.Parameters.Add("@description", SqlDbType.Text);
+                    command.Parameters.Add("@onslider", SqlDbType.Bit);
+
+                    command.Parameters["@id"].Value = painting.Id;
+                    command.Parameters["@title"].Value = painting.Title;
+                    command.Parameters["@themeId"].Value = painting.ThemeId;
+                    command.Parameters["@onslider"].Value = painting.OnSlider;
+                    if (string.IsNullOrWhiteSpace(painting.Description))
+                    {
+                        command.Parameters["@description"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@description"].Value = painting.Description;
+                    }
+
+                    command.ExecuteNonQuery();
+                });
+            }
+        }
+
         private Painting FillPainting(SqlDataReader reader)
         {
             Painting value = new Painting();
 
             int index = reader.GetOrdinal("Id");
-            if(!reader.IsDBNull(index))
+            if (!reader.IsDBNull(index))
             {
                 value.Id = reader.GetDecimal(index);
             }

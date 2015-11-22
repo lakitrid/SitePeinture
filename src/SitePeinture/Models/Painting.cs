@@ -24,5 +24,20 @@ namespace SitePeinture.Models
         public string Description { get; set; }
 
         public bool OnSlider { get; set; }
+
+        internal bool IsNew
+        {
+            get
+            {
+                if (this.Id == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

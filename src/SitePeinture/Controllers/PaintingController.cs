@@ -32,7 +32,7 @@ namespace SitePeinture.Controllers
         [HttpPost]
         public void Post([FromBody]Painting value)
         {
-
+            Dao.Edit(value);
         }
         
         [HttpGet]

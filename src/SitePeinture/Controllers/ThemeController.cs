@@ -24,9 +24,8 @@ namespace SitePeinture.Controllers
         [Route("parents/{Id}")]
         public IEnumerable<Theme> GetParents([FromRoute]decimal Id)
         {
-            return Dao.GetAll().Where(e => e.ParentId == 0 && e.Id != Id).ToArray();
+            return Dao.GetAll().Where(e => e.HasParent == false && e.Id != Id).ToArray();
         }
-
 
         [HttpPost]
         public void Post([FromBody] Theme theme)
