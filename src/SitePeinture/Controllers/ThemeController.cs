@@ -15,9 +15,17 @@ namespace SitePeinture.Controllers
         public DaoTheme Dao { get; set; }
 
         [HttpGet]
-        public IEnumerable<Theme> Index()
+        public IEnumerable<Theme> Get()
         {
             return Dao.GetAll().ToArray();
         }
+
+        [HttpGet]
+        [Route("parents/{Id}")]
+        public IEnumerable<Theme> GetParents([FromRoute]decimal Id)
+        {
+            return Dao.GetAll().Where(e => e.ParentId == 0 && e.Id != Id).ToArray();
+        }
+
     }
 }
