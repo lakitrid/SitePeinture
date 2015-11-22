@@ -30,20 +30,19 @@
             closeByEscape: false
         });
     }]).
-    controller('MainController', ['$scope', '$rootScope', '$location', '$http', function ($scope, $rootScope, $location, $http) {
+    controller('MainController', ['$rootScope', '$location', function ($rootScope, $location) {
         $rootScope.goto = function (target) {
             $location.path(target);
         };
+    }])
+    .controller('HomeController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+        $rootScope.currentView = 'home';
 
         $scope.paints = [];
 
         $http.get('painting/slider').then(function (result) {
             $scope.paints = result.data;
         });
-    }])
-    .controller('HomeController', ['$rootScope', function ($rootScope) {
-        $rootScope.currentView = 'home';
-
     }])
     .controller('ContactController', ['$rootScope', function ($rootScope) {
         $rootScope.currentView = 'contact';
@@ -58,6 +57,7 @@
         $scope.painting = true;
 
         $scope.paints = [];
+        $scope.paintsSlider = [];
         $scope.themes = [];
 
         var Load = function () {
@@ -69,6 +69,10 @@
                 $scope.themes = result.data;
             });
         }
+
+        $rootScope.$on('ngDialog.closing', function (e, $dialog) {
+            Load();
+        });
 
         Load();
 
