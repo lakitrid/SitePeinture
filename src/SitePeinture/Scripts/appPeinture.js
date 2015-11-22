@@ -93,7 +93,7 @@
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
             $scope.isEdit = true;
-            $scope.paint = $scope.ngDialogData;
+            $scope.paint = angular.copy($scope.ngDialogData);
         } else {
             $scope.isEdit = false;
         }
@@ -124,7 +124,7 @@
     .controller('EditThemeController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
             $scope.isEdit = true;
-            $scope.theme = $scope.ngDialogData;
+            $scope.theme = angular.copy($scope.ngDialogData);
         } else {
             $scope.isEdit = false;
             $scope.theme = { Id: 0 };
