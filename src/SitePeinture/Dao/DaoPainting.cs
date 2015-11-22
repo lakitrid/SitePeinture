@@ -20,7 +20,7 @@ namespace SitePeinture.Dao
 
             this.Execute((command) =>
             {
-                command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
+                command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
 
                 SqlDataReader reader = command.ExecuteReader();
 
@@ -71,6 +71,12 @@ namespace SitePeinture.Dao
             if (!reader.IsDBNull(index))
             {
                 value.Filename = reader.GetString(index);
+            }
+
+            index = reader.GetOrdinal("OnSlider");
+            if (!reader.IsDBNull(index))
+            {
+                value.OnSlider = reader.GetBoolean(index);
             }
 
 

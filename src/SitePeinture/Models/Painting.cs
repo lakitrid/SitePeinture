@@ -22,5 +22,7 @@ namespace SitePeinture.Models
         public string ThemeTitle { get; set; }
 
         public string Description { get; set; }
+
+        public bool OnSlider { get; set; }
     }
 }

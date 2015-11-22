@@ -8,18 +8,8 @@
     </ol>
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
-        <div class="item active">
-            <img src="images/tableaux/4elementeau.jpg" alt="Element eau">
-            <div class="carousel-caption">
-            </div>
-        </div>
-        <div class="item">
-            <img src="images/tableaux/4elementfeu.jpg" alt="Element feu">
-            <div class="carousel-caption">
-            </div>
-        </div>
-        <div class="item">
-            <img src="images/tableaux/4elementterre.jpg" alt="Element Terre">
+        <div class="item" ng-repeat="paint in paints" ng-class="{'active': $index == 0}">
+            <img ng-src="images/tableaux/{{paint.Filename}}" alt="{{paint.Title}}">
             <div class="carousel-caption">
             </div>
         </div>

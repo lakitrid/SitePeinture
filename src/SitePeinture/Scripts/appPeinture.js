@@ -30,10 +30,16 @@
             closeByEscape: false
         });
     }]).
-    controller('MainController', ['$scope', '$rootScope', '$location', function ($scope, $rootScope, $location) {
+    controller('MainController', ['$scope', '$rootScope', '$location', '$http', function ($scope, $rootScope, $location, $http) {
         $rootScope.goto = function (target) {
             $location.path(target);
         };
+
+        $scope.paints = [];
+
+        $http.get('painting/slider').then(function (result) {
+            $scope.paints = result.data;
+        });
     }])
     .controller('HomeController', ['$rootScope', function ($rootScope) {
         $rootScope.currentView = 'home';
