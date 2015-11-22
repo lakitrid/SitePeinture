@@ -16,5 +16,35 @@ namespace SitePeinture.Models
         public string ParentTitle { get; set; }
 
         public string Description { get; set; }
+
+        internal bool HasParent
+        {
+            get
+            {
+                if (this.ParentId == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+
+        internal bool IsNew
+        {
+            get
+            {
+                if (this.Id == 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
     }
 }

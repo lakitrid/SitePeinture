@@ -137,7 +137,7 @@
         });
 
         $scope.Save = function (theme) {
-            if ($scope.paintingForm.$valid) {
+            if ($scope.themeForm.$valid) {
 
                 $http.post('theme', theme).then(function () {
                     $scope.closeThisDialog();

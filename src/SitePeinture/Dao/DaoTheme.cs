@@ -36,17 +36,27 @@ namespace SitePeinture.Dao
 
         public void Edit(Theme theme)
         {
-            if (theme.Id == 0)
+            if (theme.IsNew)
             {
                 // Add the theme 
                 this.Execute((command) =>
                 {
                     command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description]) VALUES(@parentId, @title,@description)";
                     command.Parameters.Add("@parentId",  SqlDbType.Decimal);
-                    command.Parameters["@parentId"].Value = theme.ParentId;
                     command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters["@title"].Value = theme.Title;
                     command.Parameters.Add("@description", SqlDbType.Text);
+
+                    command.Parameters["@title"].Value = theme.Title;
+
+                    if (theme.HasParent)
+                    {
+                        command.Parameters["@parentId"].Value = theme.ParentId;
+                    }
+                    else
+                    {
+                        command.Parameters["@parentId"].Value = DBNull.Value;
+                    }
+
                     if(string.IsNullOrWhiteSpace(theme.Description))
                     {
                         command.Parameters["@description"].Value = DBNull.Value;
@@ -66,13 +76,29 @@ namespace SitePeinture.Dao
                 {
                     command.CommandText = "UPDATE [Theme] SET [ParentId]=@parentId, [Title] = @title, [Description]=@description WHERE [Id]= @id";
                     command.Parameters.Add("@id", SqlDbType.Decimal);
-                    command.Parameters["@id"].Value = theme.Id;
                     command.Parameters.Add("@parentId", SqlDbType.Decimal);
-                    command.Parameters["@parentId"].Value = theme.ParentId;
                     command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters["@title"].Value = theme.Title;
                     command.Parameters.Add("@description", SqlDbType.Text);
-                    command.Parameters["@description"].Value = theme.Description;
+                    command.Parameters["@id"].Value = theme.Id;
+                    command.Parameters["@title"].Value = theme.Title;
+
+                    if (theme.HasParent)
+                    {
+                        command.Parameters["@parentId"].Value = theme.ParentId;
+                    }
+                    else
+                    {
+                        command.Parameters["@parentId"].Value = DBNull.Value;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(theme.Description))
+                    {
+                        command.Parameters["@description"].Value = DBNull.Value;
+                    }
+                    else
+                    {
+                        command.Parameters["@description"].Value = theme.Description;
+                    }
 
                     command.ExecuteNonQuery();
                 });

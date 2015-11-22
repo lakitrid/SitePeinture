@@ -35,7 +35,7 @@
         <div class="form-group">
             <label for="theme" class="col-sm-2 control-label">Theme Parent</label>
             <div class="col-sm-10">
-                <select class="form-control" name="theme" id="theme" ng-model="theme.ParentId" required>
+                <select class="form-control" name="theme" id="theme" ng-model="theme.ParentId">
                     <option ng-repeat="parentTheme in parentThemes" value="{{parentTheme.Id}}" ng-selected="theme.ParentId == parentTheme.Id">{{parentTheme.Title}}</option>
                 </select>
             </div>
