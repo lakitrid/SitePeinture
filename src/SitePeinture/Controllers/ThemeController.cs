@@ -22,7 +22,7 @@ namespace SitePeinture.Controllers
 
         [HttpGet]
         [Route("parents/{Id}")]
-        public IEnumerable<Theme> GetParents([FromRoute]decimal Id)
+        public IEnumerable<Theme> GetParents([FromRoute]int Id)
         {
             return Dao.GetAll().Where(e => e.HasParent == false && e.Id != Id).ToArray();
         }

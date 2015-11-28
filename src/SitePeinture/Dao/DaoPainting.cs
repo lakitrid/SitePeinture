@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +23,7 @@ namespace SitePeinture.Dao
             {
                 command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
 
-                SqlDataReader reader = command.ExecuteReader();
+                SqliteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -54,11 +53,11 @@ namespace SitePeinture.Dao
                     command.CommandText = @"INSERT INTO Painting (Title, ThemeId, Description, Filename, OnSlider)
 VALUES(@title, @themeId,@description, @fileName, @onslider)";
 
-                    command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters.Add("@themeId", SqlDbType.Decimal);
-                    command.Parameters.Add("@description", SqlDbType.Text);
-                    command.Parameters.Add("@fileName", SqlDbType.Text);
-                    command.Parameters.Add("@onslider", SqlDbType.Bit);
+                    command.Parameters.Add("@title", SqliteType.Text);
+                    command.Parameters.Add("@themeId", SqliteType.Integer);
+                    command.Parameters.Add("@description", SqliteType.Text);
+                    command.Parameters.Add("@fileName", SqliteType.Text);
+                    command.Parameters.Add("@onslider", SqliteType.Integer);
 
                     command.Parameters["@title"].Value = painting.Title;
                     command.Parameters["@themeId"].Value = painting.ThemeId;
@@ -86,11 +85,11 @@ SET Title =@title,
 	Description = @description,
 	OnSlider = @onslider
 WHERE Id = @id";
-                    command.Parameters.Add("@id", SqlDbType.Decimal);
-                    command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters.Add("@themeId", SqlDbType.Decimal);
-                    command.Parameters.Add("@description", SqlDbType.Text);
-                    command.Parameters.Add("@onslider", SqlDbType.Bit);
+                    command.Parameters.Add("@id", SqliteType.Integer);
+                    command.Parameters.Add("@title", SqliteType.Text);
+                    command.Parameters.Add("@themeId", SqliteType.Integer);
+                    command.Parameters.Add("@description", SqliteType.Text);
+                    command.Parameters.Add("@onslider", SqliteType.Integer);
 
                     command.Parameters["@id"].Value = painting.Id;
                     command.Parameters["@title"].Value = painting.Title;
@@ -110,14 +109,14 @@ WHERE Id = @id";
             }
         }
 
-        private Painting FillPainting(SqlDataReader reader)
+        private Painting FillPainting(SqliteDataReader reader)
         {
             Painting value = new Painting();
 
             int index = reader.GetOrdinal("Id");
             if (!reader.IsDBNull(index))
             {
-                value.Id = reader.GetDecimal(index);
+                value.Id = reader.GetInt32(index);
             }
 
             index = reader.GetOrdinal("Title");
@@ -129,7 +128,7 @@ WHERE Id = @id";
             index = reader.GetOrdinal("ThemeId");
             if (!reader.IsDBNull(index))
             {
-                value.ThemeId = reader.GetDecimal(index);
+                value.ThemeId = reader.GetInt32(index);
             }
 
             index = reader.GetOrdinal("ThemeTitle");

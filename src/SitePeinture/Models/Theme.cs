@@ -7,11 +7,11 @@ namespace SitePeinture.Models
 {
     public class Theme
     {
-        public decimal Id { get; set; }
+        public int Id { get; set; }
 
         public string Title { get; set; }
 
-        public decimal ParentId { get; set; }
+        public int ParentId { get; set; }
 
         public string ParentTitle { get; set; }
 

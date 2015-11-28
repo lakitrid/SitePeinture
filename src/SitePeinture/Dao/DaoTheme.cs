@@ -1,9 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Configuration;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +24,7 @@ namespace SitePeinture.Dao
 FROM Theme AS t1
 LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
 
-                SqlDataReader reader = command.ExecuteReader();
+                SqliteDataReader reader = command.ExecuteReader();
 
                 while (reader.Read())
                 {
@@ -44,9 +43,9 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                 this.Execute((command) =>
                 {
                     command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description]) VALUES(@parentId, @title,@description)";
-                    command.Parameters.Add("@parentId",  SqlDbType.Decimal);
-                    command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters.Add("@description", SqlDbType.Text);
+                    command.Parameters.Add("@parentId",  SqliteType.Integer);
+                    command.Parameters.Add("@title", SqliteType.Text);
+                    command.Parameters.Add("@description", SqliteType.Text);
 
                     command.Parameters["@title"].Value = theme.Title;
 
@@ -77,10 +76,10 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                 this.Execute((command) =>
                 {
                     command.CommandText = "UPDATE [Theme] SET [ParentId]=@parentId, [Title] = @title, [Description]=@description WHERE [Id]= @id";
-                    command.Parameters.Add("@id", SqlDbType.Decimal);
-                    command.Parameters.Add("@parentId", SqlDbType.Decimal);
-                    command.Parameters.Add("@title", SqlDbType.Text);
-                    command.Parameters.Add("@description", SqlDbType.Text);
+                    command.Parameters.Add("@id", SqliteType.Integer);
+                    command.Parameters.Add("@parentId", SqliteType.Integer);
+                    command.Parameters.Add("@title", SqliteType.Text);
+                    command.Parameters.Add("@description", SqliteType.Text);
                     command.Parameters["@id"].Value = theme.Id;
                     command.Parameters["@title"].Value = theme.Title;
 
@@ -107,14 +106,14 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
             }
         }
 
-        private Theme FillTheme(SqlDataReader reader)
+        private Theme FillTheme(SqliteDataReader reader)
         {
             Theme value = new Theme();
 
             int index = reader.GetOrdinal("Id");
             if (!reader.IsDBNull(index))
             {
-                value.Id = reader.GetDecimal(index);
+                value.Id = reader.GetInt32(index);
             }
 
             index = reader.GetOrdinal("Title");
@@ -132,7 +131,7 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
             index = reader.GetOrdinal("ParentId");
             if (!reader.IsDBNull(index))
             {
-                value.ParentId = reader.GetDecimal(index);
+                value.ParentId = reader.GetInt32(index);
             }
 
             index = reader.GetOrdinal("ParentTitle");

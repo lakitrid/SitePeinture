@@ -40,6 +40,10 @@ namespace SitePeinture
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
+            // Check if the Db must be initialized
+            DaoBase dao = new DaoBase(configuration);
+            dao.Init();
+
             loggerFactory.MinimumLevel = LogLevel.Information;
             loggerFactory.AddConsole();
             loggerFactory.AddDebug();
@@ -54,8 +58,5 @@ namespace SitePeinture
             // Add MVC to the request pipeline.
             app.UseMvc();
         }
-
-        // Entry point for the application.
-        public static void Main(string[] args) => WebApplication.Run<Startup>(args);
     }
 }

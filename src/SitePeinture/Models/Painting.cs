@@ -15,9 +15,9 @@ namespace SitePeinture.Models
 
         public string Data { get; set; }
 
-        public decimal Id { get; set; }
+        public int Id { get; set; }
 
-        public decimal ThemeId { get; set; }
+        public int ThemeId { get; set; }
 
         public string ThemeTitle { get; set; }
 

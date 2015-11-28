@@ -57,7 +57,6 @@
         $scope.painting = true;
 
         $scope.paints = [];
-        $scope.paintsSlider = [];
         $scope.themes = [];
 
         var Load = function () {
