@@ -5,34 +5,17 @@ using System.Threading.Tasks;
 
 namespace SitePeinture.Models
 {
-    public class Theme
+    public class Event
     {
         public int Id { get; set; }
 
         public string Title { get; set; }
 
-        public int ParentId { get; set; }
-
-        public string ParentTitle { get; set; }
-
         public string Description { get; set; }
 
-        public bool HasChildren { get; set; }
+        public DateTime ModificationDate { get; set; }
 
-        internal bool HasParent
-        {
-            get
-            {
-                if (this.ParentId == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-        }
+        public DateTime ExpirationDate { get; set; }
 
         internal bool IsNew
         {

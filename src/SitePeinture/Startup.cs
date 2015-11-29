@@ -34,6 +34,7 @@ namespace SitePeinture
             services.AddTransient<IConfiguration>(_ => this.configuration);
             services.AddTransient<DaoPainting>();
             services.AddTransient<DaoTheme>();
+            services.AddTransient<DaoEvent>();
             services.AddMvc();
         }
 
