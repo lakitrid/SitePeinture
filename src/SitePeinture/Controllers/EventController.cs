@@ -20,5 +20,18 @@ namespace SitePeinture.Controllers
         {
             return Dao.GetAll().ToArray();
         }
+
+        [HttpPost]
+        public void Post([FromBody]Event value)
+        {
+            Dao.Edit(value);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public void Delete([FromRoute]int id)
+        {
+            Dao.Delete(id);
+        }
     }
 }

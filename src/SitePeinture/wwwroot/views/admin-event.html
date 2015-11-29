@@ -41,7 +41,7 @@
         <div class="form-group">
             <label for="description" class="col-sm-2 control-label">Description <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">(syntaxe)</a></label>
             <div class="col-sm-10">
-                <textarea class="form-control resize-v" ng-model="event.Description" />
+                <textarea class="form-control resize-v" ng-model="event.Description" required/>
             </div>
             <label class="col-sm-2 control-label">Aperçu</label>
             <div class="col-sm-10" markdown="{{event.Description}}">
