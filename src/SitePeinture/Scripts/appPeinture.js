@@ -4,7 +4,8 @@
     angular.module('appPeinture', [
         'ngRoute',
         'ngDialog',
-        'technical'
+        'technical',
+        'theme'
     ]).
     config(['$routeProvider', 'ngDialogProvider', '$httpProvider', function ($routeProvider, ngDialogProvider, $httpProvider) {
         $routeProvider.
@@ -15,6 +16,10 @@
           when('/contact', {
               templateUrl: 'views/contact.html',
               controller: 'ContactController'
+          }).
+          when('/theme/:themeId', {
+              templateUrl: 'views/theme.html',
+              controller: 'ThemeController'
           }).
           when('/admin', {
               templateUrl: 'views/admin.html',
@@ -53,11 +58,29 @@
             $scope.homeArticle = result.data;
         });
     }])
+    .controller('MenuController', ['$scope', '$http', '$location', 'ThemeService', function ($scope, $http, $location, ThemeService) {
+        $scope.paintingMenu = false;
+
+        $scope.themeService = ThemeService;
+
+        $scope.themeService.Load();
+
+        $scope.display = function (display) {
+            if (display === true && $scope.paintingMenu === true) {
+                $scope.paintingMenu = !display;
+            } else {
+                $scope.paintingMenu = display;
+            }
+        };
+
+        $scope.gotoPainting = function (theme) {
+            $location.path('theme/' + theme.Id);
+        };
+    }])
     .controller('ContactController', ['$rootScope', function ($rootScope) {
         $rootScope.currentView = 'contact';
-
     }])
-    .controller('AdminController', ['$rootScope', '$scope', '$http', 'ngDialog', function ($rootScope, $scope, $http, ngDialog) {
+    .controller('AdminController', ['$rootScope', '$scope', '$http', 'ngDialog', 'ThemeService', function ($rootScope, $scope, $http, ngDialog, ThemeService) {
         $rootScope.currentView = 'admin';
 
         $scope.home = false;
@@ -66,7 +89,7 @@
         $scope.painting = true;
 
         $scope.paints = [];
-        $scope.themes = [];
+        $scope.themeService = ThemeService;
         $scope.article = { text: "" };
 
         var Load = function () {
@@ -74,9 +97,7 @@
                 $scope.paints = result.data;
             });
 
-            $http.get('service/theme').then(function (result) {
-                $scope.themes = result.data;
-            });
+            $scope.themeService.Load();
 
             $http.get('service/home').then(function (result) {
                 $scope.article.text = result.data;

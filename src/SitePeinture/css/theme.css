@@ -28,6 +28,10 @@
     min-height: 25vh;
 }
 
+.showMenu {
+    display: block !important;
+}
+
 /* NgDialog*/
 
 @media (max-width: 768px) {
