@@ -37,12 +37,6 @@
         $rootScope.goto = function (target) {
             $location.path(target);
         };
-
-        $scope.homeArticle = "";
-
-        $http.get('service/home').then(function (result) {
-            $scope.homeArticle = result.data;
-        });
     }])
     .controller('HomeController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
         $rootScope.currentView = 'home';
@@ -51,6 +45,12 @@
 
         $http.get('service/painting/slider').then(function (result) {
             $scope.paints = result.data;
+        });
+
+        $scope.homeArticle = "";
+
+        $http.get('service/home').then(function (result) {
+            $scope.homeArticle = result.data;
         });
     }])
     .controller('ContactController', ['$rootScope', function ($rootScope) {
@@ -67,7 +67,7 @@
 
         $scope.paints = [];
         $scope.themes = [];
-        $scope.article = "";
+        $scope.article = { text: "" };
 
         var Load = function () {
             $http.get('service/painting').then(function (result) {
@@ -79,7 +79,7 @@
             });
 
             $http.get('service/home').then(function (result) {
-                $scope.article = result.data;
+                $scope.article.text = result.data;
             });
         }
 
@@ -117,8 +117,8 @@
 
         };
 
-        $scope.SaveHomeArticle = function (article) {
-            $http.post("service/home", JSON.stringify(article)).then(function () {
+        $scope.SaveHomeArticle = function () {
+            $http.post("service/home", JSON.stringify($scope.article.text)).then(function () {
                 Load();
             });
         };
@@ -201,19 +201,6 @@
                         });
                     }
                     reader.readAsDataURL(changeEvent.target.files[0]);
-                });
-            }
-        }
-    }])
-    .directive("markdown", [function () {
-        return {
-            link: function (scope, element, attributes) {
-                var converter = new showdown.Converter();
-
-                scope.$watch(function () { return attributes.markdown; }, function (newValue, oldvalue) {
-                    if (angular.isDefined(attributes.markdown)) {
-                        element[0].innerHTML = converter.makeHtml(attributes.markdown);
-                    }
                 });
             }
         }

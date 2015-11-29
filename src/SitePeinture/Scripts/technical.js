@@ -20,5 +20,18 @@
             }
         };
     }])
+    .directive("markdown", [function () {
+        return {
+            link: function (scope, element, attributes) {
+                var converter = new showdown.Converter();
+
+                scope.$watch(function () { return attributes.markdown; }, function (newValue, oldvalue) {
+                    if (angular.isDefined(attributes.markdown)) {
+                        element[0].innerHTML = converter.makeHtml(attributes.markdown);
+                    }
+                });
+            }
+        }
+    }])
     ;
 })();
