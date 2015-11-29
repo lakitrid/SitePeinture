@@ -8,7 +8,7 @@ using SitePeinture.Dao;
 
 namespace SitePeinture.Controllers
 {
-    [Route("[controller]")]
+    [Route("service/[controller]")]
     public class PaintingController : Controller
     {
         [FromServices]

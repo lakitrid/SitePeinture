@@ -3,9 +3,10 @@
 
     angular.module('appPeinture', [
         'ngRoute',
-        'ngDialog'
+        'ngDialog',
+        'technical'
     ]).
-    config(['$routeProvider', 'ngDialogProvider', function ($routeProvider, ngDialogProvider) {
+    config(['$routeProvider', 'ngDialogProvider', '$httpProvider', function ($routeProvider, ngDialogProvider, $httpProvider) {
         $routeProvider.
           when('/home', {
               templateUrl: 'views/home.html',
@@ -29,18 +30,26 @@
             closeByDocument: false,
             closeByEscape: false
         });
+
+        $httpProvider.interceptors.push('SiteHttpInterceptor');
     }]).
-    controller('MainController', ['$rootScope', '$location', function ($rootScope, $location) {
+    controller('MainController', ['$rootScope', '$location', '$scope', '$http', function ($rootScope, $location, $scope, $http) {
         $rootScope.goto = function (target) {
             $location.path(target);
         };
+
+        $scope.homeArticle = "";
+
+        $http.get('service/home').then(function (result) {
+            $scope.homeArticle = result.data;
+        });
     }])
     .controller('HomeController', ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
         $rootScope.currentView = 'home';
 
         $scope.paints = [];
 
-        $http.get('painting/slider').then(function (result) {
+        $http.get('service/painting/slider').then(function (result) {
             $scope.paints = result.data;
         });
     }])
@@ -51,21 +60,26 @@
     .controller('AdminController', ['$rootScope', '$scope', '$http', 'ngDialog', function ($rootScope, $scope, $http, ngDialog) {
         $rootScope.currentView = 'admin';
 
-        $scope.slider = false;
+        $scope.home = false;
         $scope.event = false;
         $scope.theme = false;
         $scope.painting = true;
 
         $scope.paints = [];
         $scope.themes = [];
+        $scope.article = "";
 
         var Load = function () {
-            $http.get('painting').then(function (result) {
+            $http.get('service/painting').then(function (result) {
                 $scope.paints = result.data;
             });
 
-            $http.get('theme').then(function (result) {
+            $http.get('service/theme').then(function (result) {
                 $scope.themes = result.data;
+            });
+
+            $http.get('service/home').then(function (result) {
+                $scope.article = result.data;
             });
         }
 
@@ -98,6 +112,16 @@
         $scope.DeleteTheme = function (theme, index) {
 
         };
+
+        $scope.SaveHomeArticle = function (article) {
+            $http.post("service/home", JSON.stringify(article)).then(function () {
+                Load();
+            });
+        };
+
+        $scope.Reload = function () {
+            Load();
+        };
     }])
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
@@ -109,7 +133,7 @@
 
         $scope.themes = [];
 
-        $http.get('theme').then(function (result) {
+        $http.get('service/theme').then(function (result) {
             $scope.themes = result.data;
         });
 
@@ -122,7 +146,7 @@
                     data.Data = paint.file.Data;
                 }
 
-                $http.post('painting', data).then(function () {
+                $http.post('service/painting', data).then(function () {
                     $scope.closeThisDialog();
                 });
             }
@@ -139,14 +163,14 @@
 
         $scope.parentThemes = [];
 
-        $http.get('theme/parents/' + $scope.theme.Id).then(function (result) {
+        $http.get('service/theme/parents/' + $scope.theme.Id).then(function (result) {
             $scope.parentThemes = result.data;
         });
 
         $scope.Save = function (theme) {
             if ($scope.themeForm.$valid) {
 
-                $http.post('theme', theme).then(function () {
+                $http.post('service/theme', theme).then(function () {
                     $scope.closeThisDialog();
                 });
             }

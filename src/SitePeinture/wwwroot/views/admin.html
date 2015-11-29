@@ -35,4 +35,16 @@
             </div>
         </div>
     </div>
+    <div class="panel-group" role="tablist">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab">
+                <h4 class="panel-title mouse_select" ng-click="home = !home">
+                    Message de la page d'accueil
+                </h4>
+            </div>
+            <div class="panel-body" ng-if="home">
+                <ng-include src="'views/admin-home.html'"></ng-include>
+            </div>
+        </div>
+    </div>
 </div>

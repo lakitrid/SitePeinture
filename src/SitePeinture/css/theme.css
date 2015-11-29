@@ -24,6 +24,10 @@
     resize: vertical;
 }
 
+.home-article-edit {
+    min-height: 25vh;
+}
+
 /* NgDialog*/
 
 @media (max-width: 768px) {

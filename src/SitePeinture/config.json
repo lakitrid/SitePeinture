@@ -2,5 +2,6 @@
   "connectionStrings": {
     "painting": "Data Source=(localdb)\\ProjectsV12;Initial Catalog=Peinture;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False",
     "painting-local": "Data Source=..\\Data\\Painting.sqlite;"
-  }
+  },
+  "homeArticle": "..\\Data\\homeArticle.txt"
 }

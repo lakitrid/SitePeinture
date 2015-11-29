@@ -24,11 +24,12 @@ namespace SitePeinture.Dao
 FROM Theme AS t1
 LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
 
-                SqliteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (SqliteDataReader reader = command.ExecuteReader())
                 {
-                    result.Add(this.FillTheme(reader));
+                    while (reader.Read())
+                    {
+                        result.Add(this.FillTheme(reader));
+                    }
                 }
             });
 

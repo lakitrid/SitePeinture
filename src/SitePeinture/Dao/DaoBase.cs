@@ -34,8 +34,6 @@ namespace SitePeinture.Dao
                         command.Connection = connection;
                         action.Invoke(command);
                     }
-
-                    connection.Close();
                 }
             }
             catch (Exception)
@@ -52,67 +50,85 @@ namespace SitePeinture.Dao
                 {
                     connection.Open();
 
-                    SqliteCommand command = connection.CreateCommand();
-                    command.CommandText = "SELECT version From Version";
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = "SELECT version From Version";
 
-                    try
-                    {
-                        SqliteDataReader reader = command.ExecuteReader();
-                        if (reader.Read())
+                        try
                         {
-                            connection.Close();
-                            return;
+                            using (SqliteDataReader reader = command.ExecuteReader())
+                            {
+                                if (reader.Read())
+                                {
+                                    connection.Close();
+                                    return;
+                                }
+                            }
                         }
-                    }
-                    catch (SqliteException)
-                    {
+                        catch (SqliteException)
+                        {
+                        }
                     }
 
                     // Here we have to create the database
-                    command = connection.CreateCommand();
-                    command.CommandText = @"CREATE TABLE Event(
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"CREATE TABLE Event(
                                             Id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                                             Title text NOT NULL,
                                             Description text NULL,
                                             Modification text NOT NULL,
                                             Expiration text NOT NULL)";
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
 
-                    command = connection.CreateCommand();
-                    command.CommandText = @"CREATE TABLE Painting(
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"CREATE TABLE Painting(
                                             Id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                                             Title text NOT NULL,
                                             ThemeId integer NOT NULL,
                                             Description text NULL,
                                             Filename text NOT NULL,
                                             OnSlider integer NULL)";
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
 
-                    command = connection.CreateCommand();
-                    command.CommandText = @"CREATE TABLE Theme(
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"CREATE TABLE Theme(
                                             Id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                                             ParentId integer NULL,
                                             Title text NOT NULL,
                                             Description text NULL)";
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
+                    }
 
-                    command = connection.CreateCommand();
-                    command.CommandText = @"CREATE TABLE User(
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"CREATE TABLE User(
                                             Id integer NOT NULL PRIMARY KEY AUTOINCREMENT,
                                             Login text NOT NULL,
                                             Password text NOT NULL)";
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
 
-                    command = connection.CreateCommand();
-                    command.CommandText = @"CREATE TABLE Version(
+                    }
+
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"CREATE TABLE Version(
                                             version integer)";
-                    command.ExecuteNonQuery();
+                        command.ExecuteNonQuery();
 
-                    command = connection.CreateCommand();
-                    command.CommandText = @"INSERT INTO Version(version) VALUES(1)";
-                    command.ExecuteNonQuery();
+                    }
 
-                    connection.Close();
+                    using (SqliteCommand command = connection.CreateCommand())
+                    {
+                        command.CommandText = @"INSERT INTO Version(version) VALUES(1)";
+                        command.ExecuteNonQuery();
+
+                        connection.Close();
+                    }
                 }
             }
             catch (Exception)

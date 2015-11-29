@@ -23,11 +23,13 @@ namespace SitePeinture.Dao
             {
                 command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
 
-                SqliteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                using (SqliteDataReader reader = command.ExecuteReader())
                 {
-                    result.Add(this.FillPainting(reader));
+
+                    while (reader.Read())
+                    {
+                        result.Add(this.FillPainting(reader));
+                    }
                 }
             });
 
