@@ -24,6 +24,13 @@ namespace SitePeinture.Controllers
         }
 
         [HttpGet]
+        [Route("parents")]
+        public IEnumerable<Theme> GetAllParents()
+        {
+            return Dao.GetAll().Where(e => e.HasParent == false).ToArray();
+        }
+
+        [HttpGet]
         [Route("parents/{Id}")]
         public IEnumerable<Theme> GetParents([FromRoute]int Id)
         {
