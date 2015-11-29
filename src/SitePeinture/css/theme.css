@@ -32,6 +32,10 @@
     display: block !important;
 }
 
+.themeSubTheme {
+    background-color: #40ac62;
+}
+
 /* NgDialog*/
 
 @media (max-width: 768px) {

@@ -13,22 +13,13 @@ namespace SitePeinture.Controllers
     {
         [FromServices]
         public DaoPainting Dao { get; set; }
-
-        // GET: api/values
+        
         [HttpGet]
         public IEnumerable<Painting> Get()
         {
             return Dao.GetAll().ToArray();            
         }
 
-        ////// GET api/values/5
-        ////[HttpGet("{id}")]
-        ////public string Get(int id)
-        ////{
-        ////    return "value";
-        ////}
-
-        // POST api/values
         [HttpPost]
         public void Post([FromBody]Painting value)
         {
@@ -40,6 +31,13 @@ namespace SitePeinture.Controllers
         public IEnumerable<Painting> GetSliderPaints()
         {
             return Dao.GetAll().Where(e => e.OnSlider).ToArray();
+        }
+
+        [HttpGet]
+        [Route("theme/{id}")]
+        public IEnumerable<Painting> GetPaintingByThemeId([FromRoute]int id)
+        {
+            return Dao.GetAll().Where(e => e.ThemeId.Equals(id)).ToArray();
         }
 
         [HttpDelete]

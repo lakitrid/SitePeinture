@@ -4,8 +4,28 @@
     angular.module('theme', [
         'ngRoute'        
     ])
-    .controller('ThemeController', [function () {
+    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
+        $scope.theme = {};
 
+        $scope.subthemes = [];
+
+        $scope.paints = [];
+
+        $http.get('service/theme/' + $routeParams.themeId).then(function (result) {
+            $scope.theme = result.data;
+        });
+
+        $http.get('service/theme/subthemes/' + $routeParams.themeId).then(function (result) {
+            $scope.subthemes = result.data;
+        });
+
+        $http.get('service/painting/theme/' + $routeParams.themeId).then(function (result) {
+            $scope.paints = result.data;
+        });
+
+        $scope.gotoTheme = function (theme) {
+            $location.path('theme/' + theme.Id);
+        };
     }])
     .service('ThemeService', ['$http', function ($http) {
         var themes = [];

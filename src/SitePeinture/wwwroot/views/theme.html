@@ -1,1 +1,34 @@
 ﻿
+
+<div class="row">
+    <div class="col-xs-12 col-md-2 themeSubTheme">
+        <ul ng-if="theme.HasChildren">
+            <li class="col-xs-12 mouse_select" ng-repeat="subtheme in subthemes" ng-click="gotoTheme(subtheme)">
+                <span>{{subtheme.Title}}</span>
+            </li>
+        </ul>
+    </div>
+    <div class="col-xs-12 col-md-10">
+        <h5>{{theme.Title}}</h5>
+        <div class="row" markdown="{{theme.Description}}">
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-md-6 col-lg-4" ng-repeat="paint in paints">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        {{paint.Title}}
+                    </div>
+                    <div class="panel-body panel-default">
+                        <div class="row">
+                            <img ng-src="images/tableaux/{{paint.Filename}}" />
+                        </div>
+                        <div class="row" markdown="{{paint.Description}}">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -24,6 +24,24 @@ namespace SitePeinture.Controllers
         }
 
         [HttpGet]
+        [Route("{Id}")]
+        public Theme GetWithId([FromRoute] int Id)
+        {
+            ThemeServices services = new ThemeServices(Dao);
+
+            return services.GetAll().Where(e => e.Id.Equals(Id)).FirstOrDefault();
+        }
+
+        [HttpGet]
+        [Route("subthemes/{Id}")]
+        public IEnumerable<Theme> GetSubThemeWithId([FromRoute] int Id)
+        {
+            ThemeServices services = new ThemeServices(Dao);
+
+            return services.GetAll().Where(e => e.ParentId.Equals(Id)).ToArray();
+        }
+
+        [HttpGet]
         [Route("parents")]
         public IEnumerable<Theme> GetAllParents()
         {
