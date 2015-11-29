@@ -41,5 +41,12 @@ namespace SitePeinture.Controllers
         {
             return Dao.GetAll().Where(e => e.OnSlider).ToArray();
         }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public void Delete([FromRoute]int id)
+        {
+            Dao.Delete(id);
+        }
     }
 }

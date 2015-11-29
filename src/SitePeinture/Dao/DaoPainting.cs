@@ -111,6 +111,18 @@ WHERE Id = @id";
             }
         }
 
+        public void Delete(int id)
+        {
+            this.Execute((command) =>
+            {
+                command.CommandText = "DELETE FROM [Painting] WHERE Id = @id";
+
+                command.Parameters.Add("@id", SqliteType.Integer);
+                command.Parameters["@id"].Value = id;
+                command.ExecuteNonQuery();
+            });
+        }
+
         private Painting FillPainting(SqliteDataReader reader)
         {
             Painting value = new Painting();

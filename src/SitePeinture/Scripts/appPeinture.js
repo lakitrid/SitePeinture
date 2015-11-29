@@ -98,6 +98,10 @@
         };
 
         $scope.Delete = function (paint, index) {
+            $scope.confirm = ngDialog.openConfirm({ template: 'ConfirmDelete', controller: 'ConfirmDeleteController' }).then(function () {
+                $http.delete('service/painting/' + paint.Id);
+                Load();
+            });
 
         };
 
@@ -175,6 +179,8 @@
                 });
             }
         };
+    }])
+    .controller('ConfirmDeleteController', ['$scope', '$http', function ($scope, $http) {
     }])
     .directive("fileread", [function () {
         return {
