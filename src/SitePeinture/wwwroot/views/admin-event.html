@@ -1,1 +1,58 @@
-﻿event
+﻿<h5>Liste des expositions <i class="fa fa-plus-circle text-normal mouse_select" title="Ajouter une exposition" ng-click="AddEvent()"></i></h5>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Titre</th>
+            <th>Date d'expiration</th>
+            <th style="width:50px;"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="event in events">
+            <td>
+                {{event.Title}}
+            </td>
+            <td>
+                {{event.ExpirationDate | date: 'shortDate'}}
+            </td>
+            <td>
+                <i class="fa fa-pencil-square-o text-danger mouse_select" ng-click="EditEvent(event)"></i>
+                <i class="fa fa-minus-circle text-danger mouse_select" ng-click="DeleteEvent(event, $index)"></i>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<script type="text/ng-template" id="EditEvent">
+    <h5>Ajout ou modification d'une exposition</h5>
+    <form class="form-horizontal" name="eventForm">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Titre</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" name="title" ng-model="event.Title" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Expiration</label>
+            <div class="col-sm-10">
+                <input type="date" class="form-control" name="expiration" ng-model="event.ExpirationDate" required>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="description" class="col-sm-2 control-label">Description <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">(syntaxe)</a></label>
+            <div class="col-sm-10">
+                <textarea class="form-control resize-v" ng-model="event.Description" />
+            </div>
+            <label class="col-sm-2 control-label">Aperçu</label>
+            <div class="col-sm-10" markdown="{{event.Description}}">
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-default" ng-click="Save(event)">Enregistrer</button>
+                <button type="submit" class="btn btn-default" ng-click="closeThisDialog()">Annuler</button>
+            </div>
+        </div>
+    </form>
+</script>

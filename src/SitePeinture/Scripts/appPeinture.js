@@ -67,6 +67,7 @@
 
         $scope.paints = [];
         $scope.themes = [];
+        $scope.events = [];
         $scope.article = { text: "" };
 
         var Load = function () {
@@ -77,6 +78,10 @@
             $http.get('service/theme').then(function (result) {
                 $scope.themes = result.data;
             });
+
+            $http.get('service/event').then(function (result) {
+                $scope.events = result.data;
+            })
 
             $http.get('service/home').then(function (result) {
                 $scope.article.text = result.data;
@@ -104,7 +109,6 @@
                 $http.delete('service/painting/' + paint.Id);
                 Load();
             });
-
         };
 
         $scope.AddTheme = function () {
@@ -120,6 +124,23 @@
                 template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
             }).then(function () {
                 $http.delete('service/theme/' + theme.Id);
+                Load();
+            });
+        };
+
+        $scope.AddEvent = function () {
+            ngDialog.open({ template: 'EditEvent', controller: 'EditEventController' });
+        }
+
+        $scope.EditEvent = function (event) {
+            ngDialog.open({ template: 'EditEvent', controller: 'EditEventController', data: event });
+        }
+
+        $scope.DeleteEvent = function (event, index) {
+            $scope.confirm = ngDialog.openConfirm({
+                template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+            }).then(function () {
+                $http.delete('service/event/' + event.Id);
                 Load();
             });
         };
@@ -187,6 +208,23 @@
             }
         };
     }])
+   .controller('EditEventController', ['$scope', '$http', function ($scope, $http) {
+       if (angular.isDefined($scope.ngDialogData)) {
+           $scope.isEdit = true;
+           $scope.event = angular.copy($scope.ngDialogData);
+       } else {
+           $scope.isEdit = false;
+           $scope.event = { Id: 0 };
+       }
+
+       $scope.Save = function (event) {
+           if ($scope.eventForm.$valid) {
+               $http.post('service/event', event).then(function () {
+                   $scope.closeThisDialog();
+               });
+           }
+       };
+   }])
     .controller('ConfirmDeleteController', ['$scope', '$http', function ($scope, $http) {
     }])
     .directive("fileread", [function () {
