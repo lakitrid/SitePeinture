@@ -98,7 +98,9 @@
         };
 
         $scope.Delete = function (paint, index) {
-            $scope.confirm = ngDialog.openConfirm({ template: 'ConfirmDelete', controller: 'ConfirmDeleteController' }).then(function () {
+            $scope.confirm = ngDialog.openConfirm({
+                template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+            }).then(function () {
                 $http.delete('service/painting/' + paint.Id);
                 Load();
             });
@@ -114,7 +116,12 @@
         };
 
         $scope.DeleteTheme = function (theme, index) {
-
+            $scope.confirm = ngDialog.openConfirm({
+                template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+            }).then(function () {
+                $http.delete('service/theme/' + theme.Id);
+                Load();
+            });
         };
 
         $scope.SaveHomeArticle = function () {

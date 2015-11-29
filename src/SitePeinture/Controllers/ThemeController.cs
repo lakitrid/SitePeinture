@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using SitePeinture.Models;
 using SitePeinture.Dao;
+using SitePeinture.Services;
 
 namespace SitePeinture.Controllers
 {
@@ -17,20 +18,35 @@ namespace SitePeinture.Controllers
         [HttpGet]
         public IEnumerable<Theme> Get()
         {
-            return Dao.GetAll().ToArray();
+            ThemeServices services = new ThemeServices(Dao);
+
+            return services.GetAll().ToArray();
         }
 
         [HttpGet]
         [Route("parents/{Id}")]
         public IEnumerable<Theme> GetParents([FromRoute]int Id)
         {
-            return Dao.GetAll().Where(e => e.HasParent == false && e.Id != Id).ToArray();
+            ThemeServices services = new ThemeServices(Dao);
+
+            return services.GetParents(Id);
         }
 
         [HttpPost]
         public void Post([FromBody] Theme theme)
         {
-            Dao.Edit(theme);
+            ThemeServices services = new ThemeServices(Dao);
+
+            services.Edit(theme);
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public void Delete([FromRoute]int id)
+        {
+            ThemeServices services = new ThemeServices(Dao);
+
+            services.Delete(id);
         }
     }
 }

@@ -44,7 +44,7 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                 this.Execute((command) =>
                 {
                     command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description]) VALUES(@parentId, @title,@description)";
-                    command.Parameters.Add("@parentId",  SqliteType.Integer);
+                    command.Parameters.Add("@parentId", SqliteType.Integer);
                     command.Parameters.Add("@title", SqliteType.Text);
                     command.Parameters.Add("@description", SqliteType.Text);
 
@@ -59,7 +59,7 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                         command.Parameters["@parentId"].Value = DBNull.Value;
                     }
 
-                    if(string.IsNullOrWhiteSpace(theme.Description))
+                    if (string.IsNullOrWhiteSpace(theme.Description))
                     {
                         command.Parameters["@description"].Value = DBNull.Value;
                     }
@@ -105,6 +105,18 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                     command.ExecuteNonQuery();
                 });
             }
+        }
+
+        public void Delete(int id)
+        {
+            this.Execute((command) =>
+            {
+                command.CommandText = "DELETE FROM [Theme] WHERE Id = @id";
+
+                command.Parameters.Add("@id", SqliteType.Integer);
+                command.Parameters["@id"].Value = id;
+                command.ExecuteNonQuery();
+            });
         }
 
         private Theme FillTheme(SqliteDataReader reader)

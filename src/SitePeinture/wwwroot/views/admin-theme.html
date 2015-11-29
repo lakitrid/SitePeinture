@@ -17,7 +17,7 @@
             </td>
             <td>
                 <i class="fa fa-pencil-square-o text-danger mouse_select" ng-click="EditTheme(theme)"></i>
-                <i class="fa fa-minus-circle text-danger mouse_select" ng-click="DeleteTheme(theme, $index)"></i>
+                <i class="fa fa-minus-circle text-danger mouse_select" ng-hide="theme.HasChildren" ng-click="DeleteTheme(theme, $index)"></i>
             </td>
         </tr>
     </tbody>
