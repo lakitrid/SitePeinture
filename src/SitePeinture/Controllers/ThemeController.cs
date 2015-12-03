@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using SitePeinture.Models;
 using SitePeinture.Dao;
 using SitePeinture.Services;
+using Microsoft.AspNet.Authorization;
 
 namespace SitePeinture.Controllers
 {
@@ -58,6 +59,7 @@ namespace SitePeinture.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public void Post([FromBody] Theme theme)
         {
             ThemeServices services = new ThemeServices(Dao);
@@ -66,6 +68,7 @@ namespace SitePeinture.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {

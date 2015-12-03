@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 using SitePeinture.Dao;
 using SitePeinture.Models;
 using System;
@@ -22,12 +23,14 @@ namespace SitePeinture.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public void Post([FromBody]Event value)
         {
             Dao.Edit(value);
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using System.IO;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNet.Authorization;
 
 // For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -30,6 +31,7 @@ namespace SitePeinture.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public void Post([FromBody]string homeArticle)
         {
             string homeArticleFile = Configuration.GetSection("homeArticle").Value;

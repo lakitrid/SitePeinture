@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using SitePeinture.Models;
 using SitePeinture.Dao;
+using Microsoft.AspNet.Authorization;
 
 namespace SitePeinture.Controllers
 {
@@ -21,6 +22,7 @@ namespace SitePeinture.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public void Post([FromBody]Painting value)
         {
             Dao.Edit(value);
@@ -41,6 +43,7 @@ namespace SitePeinture.Controllers
         }
 
         [HttpDelete]
+        [Authorize]
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {
