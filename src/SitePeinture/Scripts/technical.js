@@ -33,5 +33,22 @@
             }
         }
     }])
+    .controller('LoginController', ['$scope', '$http', '$location', function ($scope, $http, $location) {
+        $scope.user = {};
+
+        $scope.error = false;
+
+        $scope.Login = function () {
+            if ($scope.loginForm.$valid) {
+                $http.post('service/user/login', $scope.user).then(function (result) {
+                    if (result.data === true) {
+                        $location.path("/admin");
+                    } else {
+                        $scope.error = true;
+                    }
+                });
+            }
+        };
+    }])
     ;
 })();

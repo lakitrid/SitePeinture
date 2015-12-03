@@ -4,12 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using SitePeinture.Services;
+using SitePeinture.Models;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace SitePeinture.Controllers
 {
-    [Route("[controller]")]
+    [Route("service/[controller]")]
     public class UserController : Controller
     {
         [FromServices]
@@ -17,9 +18,16 @@ namespace SitePeinture.Controllers
 
         [HttpPost]
         [Route("login")]
-        public async Task<bool> Post([FromBody]string login, [FromBody]string password)
+        public async Task<bool> Post([FromBody]LoginUser user)
         {
-            return await this.UserService.Login(login, password);
+            try
+            {
+                return await this.UserService.Login(user.Login, user.Password);
+            }
+            catch (Exception exc)
+            {
+                return false;
+            }
         }
     }
 }
