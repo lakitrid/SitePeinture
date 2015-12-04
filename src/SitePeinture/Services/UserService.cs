@@ -22,8 +22,10 @@ namespace SitePeinture.Services
 
         internal async Task<bool> Login(string login, string password)
         {
+            await this.CheckIfAdminExists();
+
             var signInStatus = await this._signInManager.PasswordSignInAsync(login, password, true, false);
-            if(signInStatus == SignInResult.Success)
+            if (signInStatus == SignInResult.Success)
             {
                 return true;
             }
@@ -31,16 +33,43 @@ namespace SitePeinture.Services
             return false;
         }
 
+        private async Task CheckIfAdminExists()
+        {
+            User user = await this._userManager.FindByNameAsync("admin");
+            if (user == null)
+            {
+                // add editor user
+                user = new User
+                {
+                    UserName = "admin"
+                };
+
+                await this._userManager.CreateAsync(user, "BasicPwd24!");
+            }
+        }
+
         internal void SignOut()
         {
             this._signInManager.SignOutAsync().Wait();
         }
 
-        internal async void ChangePassword(PasswordUser user, string userId)
+        internal async Task ChangePassword(PasswordUser user, string userId)
         {
             User connectedUser = await this._userManager.FindByNameAsync(userId);
 
-            await this._userManager.ChangePasswordAsync(connectedUser, user.CurrentPassword, user.NewPassword);
+            try
+            {
+                IdentityResult result = await this._userManager.ChangePasswordAsync(connectedUser, user.CurrentPassword, user.NewPassword);
+                if (result == IdentityResult.Success)
+                {
+
+
+                }
+            }
+            catch (Exception exc)
+            {
+
+            }
         }
     }
 }

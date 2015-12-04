@@ -9,6 +9,6 @@ namespace SitePeinture.Models
     {
         public string NewPassword { get; set; }
 
-        public string CurrentPassword { get; internal set; }
+        public string CurrentPassword { get; set; }
     }
 }

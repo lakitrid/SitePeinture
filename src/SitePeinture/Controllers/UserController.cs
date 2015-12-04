@@ -55,9 +55,9 @@ namespace SitePeinture.Controllers
 
         [HttpPost, Route("change")]
         [Authorize]
-        public void ChangePassword([FromBody]PasswordUser user)
+        public async Task ChangePassword([FromBody]PasswordUser user)
         {
-            this.UserService.ChangePassword(user, this.User.Identity.Name);
+            await this.UserService.ChangePassword(user, this.User.Identity.Name);
         }
     }
 }

@@ -77,31 +77,6 @@ namespace SitePeinture
             // Add MVC to the request pipeline.
             app.UseIdentity();
             app.UseMvc();
-
-            CreateSampleData(app.ApplicationServices).Wait();
-        }
-
-        public static async Task CreateSampleData(IServiceProvider applicationServices)
-        {
-            using (var dbContext = applicationServices.GetService<IdentityContext>())
-            {
-                var database = dbContext.Database;
-                if(database != null)
-                {
-                    if(database.EnsureCreated())
-                    {
-                        var userManager = applicationServices.GetService<UserManager<User>>();
-
-                        // add editor user
-                        var user = new User
-                        {
-                            UserName = "admin"
-                        };
-
-                        var result = await userManager.CreateAsync(user, "");
-                    }
-                }
-            }
         }
     }
 }

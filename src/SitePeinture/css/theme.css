@@ -910,9 +910,10 @@ h6, .page-content h6 a {
         }
 
 .navbar .nav-pills > li > a {
+    margin-top: 15px;
     margin-left: 2px;
     margin-right: 2px;
-    padding: 35px;
+    padding: 20px;
     border-top-left-radius: 0px;
     border-top-right-radius: 0px;
     border-bottom-right-radius: 0px;
@@ -1037,13 +1038,13 @@ body {
         margin: auto;
     }
 
-@media (min-width: 980px) {
+@media (min-width: 995px) {
     .navbar .collapse {
         display: block !important;
     }
 }
 
-@media (max-width: 979px) {
+@media (max-width: 994px) {
     #divLogo {
         margin-bottom: 10px;
     }

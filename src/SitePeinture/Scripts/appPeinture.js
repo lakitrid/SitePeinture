@@ -196,18 +196,6 @@
             $scope.Reload = function () {
                 Load();
             };
-
-            $scope.user = {};
-
-            $scope.ChangePassword = function () {
-                if (passForm.$valid) {
-                    if (user.password === user.confirmpassword) {
-                        $http.post('service/user/change').then(function (result) {
-                            user = {};
-                        });
-                    }
-                }
-            };
         }])
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
         if (angular.isDefined($scope.ngDialogData)) {
@@ -238,71 +226,85 @@
             }
         };
     }])
-.controller('EditThemeController', ['$scope', '$http', function ($scope, $http) {
-    if (angular.isDefined($scope.ngDialogData)) {
-        $scope.isEdit = true;
-        $scope.theme = angular.copy($scope.ngDialogData);
-    } else {
-        $scope.isEdit = false;
-        $scope.theme = { Id: 0 };
-    }
-
-    $scope.parentThemes = [];
-
-    $http.get('service/theme/parents/' + $scope.theme.Id).then(function (result) {
-        $scope.parentThemes = result.data;
-    });
-
-    $scope.Save = function (theme) {
-        if ($scope.themeForm.$valid) {
-
-            $http.post('service/theme', theme).then(function () {
-                $scope.closeThisDialog();
-            });
+    .controller('EditThemeController', ['$scope', '$http', function ($scope, $http) {
+        if (angular.isDefined($scope.ngDialogData)) {
+            $scope.isEdit = true;
+            $scope.theme = angular.copy($scope.ngDialogData);
+        } else {
+            $scope.isEdit = false;
+            $scope.theme = { Id: 0 };
         }
-    };
-}])
-.controller('EditEventController', ['$scope', '$http', function ($scope, $http) {
-    if (angular.isDefined($scope.ngDialogData)) {
-        $scope.isEdit = true;
-        $scope.event = angular.copy($scope.ngDialogData);
-    } else {
-        $scope.isEdit = false;
-        $scope.event = { Id: 0 };
-    }
 
-    $scope.Save = function (event) {
-        if ($scope.eventForm.$valid) {
-            $http.post('service/event', event).then(function () {
-                $scope.closeThisDialog();
-            });
+        $scope.parentThemes = [];
+
+        $http.get('service/theme/parents/' + $scope.theme.Id).then(function (result) {
+            $scope.parentThemes = result.data;
+        });
+
+        $scope.Save = function (theme) {
+            if ($scope.themeForm.$valid) {
+
+                $http.post('service/theme', theme).then(function () {
+                    $scope.closeThisDialog();
+                });
+            }
+        };
+    }])
+    .controller('EditEventController', ['$scope', '$http', function ($scope, $http) {
+        if (angular.isDefined($scope.ngDialogData)) {
+            $scope.isEdit = true;
+            $scope.event = angular.copy($scope.ngDialogData);
+        } else {
+            $scope.isEdit = false;
+            $scope.event = { Id: 0 };
         }
-    };
-}])
-.controller('ConfirmDeleteController', ['$scope', '$http', function ($scope, $http) {
-}])
-.directive("fileread", [function () {
-    return {
-        scope: {
-            fileread: "="
-        },
-        link: function (scope, element, attributes) {
-            element.bind("change", function (changeEvent) {
-                var reader = new FileReader();
-                reader.onload = function (loadEvent) {
-                    scope.$apply(function () {
-                        var filedata = {
-                            Filename: changeEvent.target.files[0].name,
-                            Data: loadEvent.target.result
-                        }
 
-                        scope.fileread = filedata;
+        $scope.Save = function (event) {
+            if ($scope.eventForm.$valid) {
+                $http.post('service/event', event).then(function () {
+                    $scope.closeThisDialog();
+                });
+            }
+        };
+    }])
+    .controller('ConfirmDeleteController', ['$scope', '$http', function ($scope, $http) {
+    }])
+    .controller('ChangePasswordController', ['$scope', '$http', function ($scope, $http) {
+        $scope.user = {};
+
+        $scope.ChangePassword = function () {
+            if ($scope.passForm.$valid) {
+                if ($scope.user.NewPassword === $scope.user.ConfirmPassword) {
+                    $http.post('service/user/change', $scope.user).then(function (result) {
+                        $scope.user = {};
+                    }, function (result) {
                     });
                 }
-                reader.readAsDataURL(changeEvent.target.files[0]);
-            });
+            }
+        };
+    }])
+    .directive("fileread", [function () {
+        return {
+            scope: {
+                fileread: "="
+            },
+            link: function (scope, element, attributes) {
+                element.bind("change", function (changeEvent) {
+                    var reader = new FileReader();
+                    reader.onload = function (loadEvent) {
+                        scope.$apply(function () {
+                            var filedata = {
+                                Filename: changeEvent.target.files[0].name,
+                                Data: loadEvent.target.result
+                            }
+
+                            scope.fileread = filedata;
+                        });
+                    }
+                    reader.readAsDataURL(changeEvent.target.files[0]);
+                });
+            }
         }
-    }
-}])
+    }])
     ;
 })();
