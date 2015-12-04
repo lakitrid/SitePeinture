@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using SitePeinture.Services;
 using SitePeinture.Models;
+using Microsoft.AspNet.Authorization;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -50,6 +51,13 @@ namespace SitePeinture.Controllers
             {
                 return false;
             }
+        }
+
+        [HttpPost, Route("change")]
+        [Authorize]
+        public void ChangePassword([FromBody]PasswordUser user)
+        {
+            this.UserService.ChangePassword(user, this.User.Identity.Name);
         }
     }
 }

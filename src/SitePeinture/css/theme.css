@@ -36,6 +36,26 @@
     background-color: #40ac62;
 }
 
+@media (min-width: 769px) {
+    .panel-login {
+        margin-right: 25%;
+        margin-left: 25%;
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .panel-login {
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-top: 5%;
+    }
+}
+
+.panel-login label {
+    margin-bottom: 1em !important;
+}
+
 /* NgDialog*/
 
 @media (max-width: 768px) {

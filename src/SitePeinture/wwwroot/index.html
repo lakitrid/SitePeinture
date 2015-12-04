@@ -59,7 +59,10 @@
                                         <li class="dropdown" ng-class="{'active' : currentView == 'contact'}" ng-mouseenter="display(false)">
                                             <a href="" ng-click="goto('contact')">Contact</a>
                                         </li>
-                                        <li class="dropdown" ng-class="{'active' : currentView == 'admin'}" ng-mouseenter="display(false)">
+                                        <li ng-if="!isConnected" class="dropdown" ng-class="{'active' : currentView == 'admin'}" ng-mouseenter="display(false)">
+                                            <a href="" ng-click="goto('login')"><i class="fa fa-cog"></i></a>
+                                        </li>
+                                        <li ng-if="isConnected" class="dropdown" ng-class="{'active' : currentView == 'admin'}" ng-mouseenter="display(false)">
                                             <a href="" ng-click="goto('admin')"><i class="fa fa-cog"></i></a>
                                         </li>
                                         <li ng-if="isConnected">

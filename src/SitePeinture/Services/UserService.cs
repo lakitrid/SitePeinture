@@ -35,5 +35,12 @@ namespace SitePeinture.Services
         {
             this._signInManager.SignOutAsync().Wait();
         }
+
+        internal async void ChangePassword(PasswordUser user, string userId)
+        {
+            User connectedUser = await this._userManager.FindByNameAsync(userId);
+
+            await this._userManager.ChangePasswordAsync(connectedUser, user.CurrentPassword, user.NewPassword);
+        }
     }
 }

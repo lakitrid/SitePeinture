@@ -107,6 +107,7 @@
             $scope.event = false;
             $scope.theme = false;
             $scope.painting = true;
+            $scope.pass = false;
 
             $scope.paints = [];
             $scope.themeService = ThemeService;
@@ -194,6 +195,18 @@
 
             $scope.Reload = function () {
                 Load();
+            };
+
+            $scope.user = {};
+
+            $scope.ChangePassword = function () {
+                if (passForm.$valid) {
+                    if (user.password === user.confirmpassword) {
+                        $http.post('service/user/change').then(function (result) {
+                            user = {};
+                        });
+                    }
+                }
             };
         }])
     .controller('EditPaintingController', ['$scope', '$http', function ($scope, $http) {
