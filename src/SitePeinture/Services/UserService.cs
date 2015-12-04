@@ -30,5 +30,10 @@ namespace SitePeinture.Services
 
             return false;
         }
+
+        internal void SignOut()
+        {
+            this._signInManager.SignOutAsync().Wait();
+        }
     }
 }

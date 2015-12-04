@@ -50,5 +50,35 @@
             }
         };
     }])
+    .factory("IdentityService", ['$rootScope', '$http', '$location', function ($rootScope, $http, $location) {
+        var IsAuth = function () {
+            var promise = $http.get('service/user/isAuth');
+            promise.then(function (result) {
+                if (result.data === true) {
+                    $rootScope.isConnected = true;
+                } else {
+                    $rootScope.isConnected = false;
+                }
+            }, function (error) {
+                $rootScope.isConnected = false;
+            });
+
+            return promise;
+        };
+
+        var SignOut = function () {
+            var promise = $http.get('service/user/signOut').then(function () {
+                $rootScope.isConnected = false;
+                $location.path('home');
+            });
+
+            return promise;
+        }
+
+        return {
+            isAuth: IsAuth,
+            signOut: SignOut
+        };
+    }])
     ;
 })();

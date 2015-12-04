@@ -62,6 +62,9 @@
                                         <li class="dropdown" ng-class="{'active' : currentView == 'admin'}" ng-mouseenter="display(false)">
                                             <a href="" ng-click="goto('admin')"><i class="fa fa-cog"></i></a>
                                         </li>
+                                        <li ng-if="isConnected">
+                                            <a href="" ng-click="IdentityService.signOut()"><i class="fa fa-close"></i></a>
+                                        </li>
                                     </ul>
                                 </div>
                             </div>

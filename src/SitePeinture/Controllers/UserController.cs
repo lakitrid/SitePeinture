@@ -16,6 +16,28 @@ namespace SitePeinture.Controllers
         [FromServices]
         public UserService UserService { get; set; }
 
+        [HttpGet, Route("isAuth")]
+        public bool IsAuth()
+        {
+            if(this.User == null)
+            {
+                return false;
+            }
+
+            if(!this.User.Identity.IsAuthenticated)
+            {
+                return false;
+            }
+
+            return true;            
+        }
+
+        [HttpGet, Route("signOut")]
+        public void SignOut()
+        {
+            this.UserService.SignOut();
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<bool> Post([FromBody]LoginUser user)
