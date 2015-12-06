@@ -67,6 +67,11 @@
         $http.get('service/home').then(function (result) {
             $scope.homeArticle = result.data;
         });
+
+        $scope.nextEvents = [];
+        $http.get('service/event/next').then(function (result) {
+            $scope.nextEvents = result.data;
+        });
     }])
     .controller('MenuController', ['$scope', '$http', '$location', 'ThemeService',
         function ($scope, $http, $location, ThemeService) {

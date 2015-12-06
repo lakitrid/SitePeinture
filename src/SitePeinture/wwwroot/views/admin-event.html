@@ -13,7 +13,7 @@
                 {{event.Title}}
             </td>
             <td>
-                {{event.ExpirationDate | date: 'shortDate'}}
+                {{event.ExpirationDate | date:'dd/MM/yyyy'}}
             </td>
             <td>
                 <i class="fa fa-pencil-square-o text-danger mouse_select" ng-click="EditEvent(event)"></i>
