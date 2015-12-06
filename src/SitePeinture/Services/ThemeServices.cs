@@ -34,7 +34,8 @@ namespace SitePeinture.Services
                 {
                     theme.HasChildrenPainting = true;
                 }
-                else if (allThemes.Any(t => t.ParentId == theme.Id))
+
+                if (allThemes.Any(t => t.ParentId == theme.Id))
                 {
                     theme.HasChildrenTheme = true;
                 }
