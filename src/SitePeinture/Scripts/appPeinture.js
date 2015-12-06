@@ -114,6 +114,8 @@
             $scope.events = [];
             $scope.article = { text: "" };
 
+            $scope.homeSuccess = false;
+
             var Load = function () {
                 $http.get('service/painting').then(function (result) {
                     $scope.paints = result.data;
@@ -188,7 +190,11 @@
             };
 
             $scope.SaveHomeArticle = function () {
+                $scope.homeSuccess = false;
+
                 $http.post("service/home", JSON.stringify($scope.article.text)).then(function () {
+                    $scope.homeSuccess = true;
+
                     Load();
                 });
             };
@@ -272,13 +278,31 @@
     .controller('ChangePasswordController', ['$scope', '$http', function ($scope, $http) {
         $scope.user = {};
 
+        $scope.error = {
+            hasError: false,
+            errors: []
+        };
+
+        $scope.hasSuccess = false;
+
         $scope.ChangePassword = function () {
+            $scope.hasSuccess = false;
+
             if ($scope.passForm.$valid) {
                 if ($scope.user.NewPassword === $scope.user.ConfirmPassword) {
                     $http.post('service/user/change', $scope.user).then(function (result) {
+                        $scope.error.hasError = false;
+                        $scope.hasSuccess = true;
                         $scope.user = {};
                     }, function (result) {
+                        if (angular.isDefined(result.data)) {
+                            $scope.error.hasError = true;
+                            $scope.error.errors = result.data;
+                        }
                     });
+                } else {
+                    $scope.error.hasError = true;
+                    $scope.error.errors = [ "Le nouveau mot de passe et sa confirmation doivent être identiques"];
                 }
             }
         };
