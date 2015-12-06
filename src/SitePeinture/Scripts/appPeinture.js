@@ -209,6 +209,12 @@
 
         $http.get('service/theme').then(function (result) {
             $scope.themes = result.data;
+
+            $scope.themes.forEach(function (tm) {
+                if (angular.isDefined($scope.paint) && tm.Id == $scope.paint.ThemeId) {
+                    $scope.paint.currentTheme = tm;
+                }
+            })
         });
 
         $scope.Save = function (paint) {
@@ -220,6 +226,7 @@
                     data.Data = paint.file.Data;
                 }
 
+                data.ThemeId = $scope.paint.currentTheme.Id;
                 $http.post('service/painting', data).then(function () {
                     $scope.closeThisDialog();
                 });
@@ -239,10 +246,19 @@
 
         $http.get('service/theme/parents/' + $scope.theme.Id).then(function (result) {
             $scope.parentThemes = result.data;
+            $scope.parentThemes.forEach(function (pt) {
+                if (pt.Id == $scope.theme.ParentId) {
+                    $scope.theme.currentParent = pt;
+                }
+            })
         });
 
         $scope.Save = function (theme) {
             if ($scope.themeForm.$valid) {
+
+                if (angular.isDefined($scope.theme.currentParent)) {
+                    theme.ParentId = $scope.theme.currentParent.Id;
+                } 
 
                 $http.post('service/theme', theme).then(function () {
                     $scope.closeThisDialog();

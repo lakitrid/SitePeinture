@@ -17,7 +17,9 @@ namespace SitePeinture.Models
 
         public string Description { get; set; }
 
-        public bool HasChildren { get; set; }
+        public bool HasChildrenTheme { get; set; }
+
+        public bool HasChildrenPainting { get; set; }
 
         internal bool HasParent
         {
