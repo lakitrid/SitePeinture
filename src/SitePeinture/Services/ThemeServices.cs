@@ -32,11 +32,12 @@ namespace SitePeinture.Services
             {
                 if (allPainting.Any(p => p.ThemeId == theme.Id))
                 {
-                    theme.HasChildren = true;
+                    theme.HasChildrenPainting = true;
                 }
-                else if (allThemes.Any(t => t.ParentId == theme.Id))
+
+                if (allThemes.Any(t => t.ParentId == theme.Id))
                 {
-                    theme.HasChildren = true;
+                    theme.HasChildrenTheme = true;
                 }
             }
 

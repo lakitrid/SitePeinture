@@ -21,6 +21,13 @@ namespace SitePeinture.Controllers
         {
             return Dao.GetAll().ToArray();
         }
+        
+        [HttpGet]
+        [Route("next")]
+        public IEnumerable<Event> GetNextEvents()
+        {
+            return Dao.GetAll().Where(d => d.ExpirationDate >= DateTime.Now.Date);
+        }
 
         [HttpPost]
         [Authorize]

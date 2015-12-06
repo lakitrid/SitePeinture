@@ -8,8 +8,15 @@
             <h5>
                 Prochaines expositions
             </h5>
-            <div>
-
+            <div class="panel panel-default" ng-repeat="nextEvent in nextEvents">
+                <div class="panel-heading">
+                    <span>{{nextEvent.Title}}</span>
+                    <span class="pull-right">{{nextEvent.ExpirationDate| date:'dd/MM/yyyy'}}</span>
+                </div>
+                <div class="panel-body panel-default">
+                    <div markdown="{{nextEvent.Description}}">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
