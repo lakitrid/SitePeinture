@@ -36,7 +36,8 @@ module.exports = function (grunt) {
                     { expand: true, flatten: true, cwd: 'node_modules/', src: ['font-awesome/**/*.min.js'], dest: 'wwwroot/scripts/' },
                     { expand: true, flatten: true, cwd: 'node_modules/', src: ['jquery/**/jquery.min.js'], dest: 'wwwroot/scripts/' },
                     { expand: true, flatten: true, cwd: 'node_modules/', src: ['ng-dialog/**/*.min.js'], dest: 'wwwroot/scripts/' },
-                    { expand: true, flatten: true, cwd: 'node_modules/', src: ['showdown/**/*.min.js'], dest: 'wwwroot/scripts/' }
+                    { expand: true, flatten: true, cwd: 'node_modules/', src: ['showdown/**/*.min.js'], dest: 'wwwroot/scripts/' },
+                    { expand: true, flatten: true, cwd: 'node_modules/', src: ['ngtouch/**/*.min.js'], dest: 'wwwroot/scripts/' }
                 ]
             }
         },

@@ -5,7 +5,9 @@
         'ngRoute',
         'ngDialog',
         'technical',
-        'theme'
+        'theme',
+        'slider',
+        'ngAnimate'
     ]).
     config(['$routeProvider', 'ngDialogProvider', '$httpProvider', function ($routeProvider, ngDialogProvider, $httpProvider) {
         $routeProvider.
@@ -56,11 +58,6 @@
         $rootScope.IdentityService.isAuth();
 
         $rootScope.currentView = 'home';
-        $scope.paints = [];
-
-        $http.get('service/painting/slider').then(function (result) {
-            $scope.paints = result.data;
-        });
 
         $scope.homeArticle = "";
 
