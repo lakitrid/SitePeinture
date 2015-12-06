@@ -53,23 +53,25 @@ namespace SitePeinture.Services
             this._signInManager.SignOutAsync().Wait();
         }
 
-        internal async Task ChangePassword(PasswordUser user, string userId)
+        internal async Task<List<string>> ChangePassword(PasswordUser user, string userId)
         {
+            List<string> errors = new List<string>();
             User connectedUser = await this._userManager.FindByNameAsync(userId);
 
             try
             {
                 IdentityResult result = await this._userManager.ChangePasswordAsync(connectedUser, user.CurrentPassword, user.NewPassword);
-                if (result == IdentityResult.Success)
+                if (result != IdentityResult.Success)
                 {
-
-
+                    errors.AddRange(result.Errors.Select(e => e.Description));
                 }
             }
             catch (Exception exc)
             {
-
+                errors.Add(exc.Message);
             }
+
+            return errors;
         }
     }
 }

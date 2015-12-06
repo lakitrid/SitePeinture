@@ -20,6 +20,9 @@
                     <input type="password" class="form-control" ng-model="user.Password" required/>
                 </div>
             </div>
+            <div class="alert alert-danger" ng-if="error">
+                <span>Login ou mot de passe incorrect</span>
+            </div>
             <div class="form-group">
                 <div class="col-xs-12">
                     <button type="submit" class="btn btn-default" ng-click="Login()">Se connecter</button>
