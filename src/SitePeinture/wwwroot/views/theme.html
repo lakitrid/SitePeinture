@@ -1,31 +1,40 @@
-﻿
-
-<div class="row">
-    <div class="col-xs-12 col-md-2 themeSubTheme">
-        <ul ng-if="theme.HasChildren">
-            <li class="col-xs-12 mouse_select" ng-repeat="subtheme in subthemes" ng-click="gotoTheme(subtheme)">
-                <span>{{subtheme.Title}}</span>
+﻿<div class="col-xs-12 col-md-3">
+    <div class="panel panel-default" ng-if="theme.ParentId !== 0">
+        <div class="panel-heading">
+            <h4>Theme parent</h4>
+        </div>
+        <div class="panel-body">
+            <a href="" ng-click="gotoThemeId(theme.ParentId)">{{theme.ParentTitle}}</a>
+        </div>
+    </div>
+    <div class="panel panel-default" ng-if="theme.HasChildren">
+        <div class="panel-heading">
+            <h4>Sous themes</h4>
+        </div>
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="subtheme in subthemes">
+                <a href="" ng-click="gotoTheme(subtheme)">{{subtheme.Title}}</a>
             </li>
         </ul>
     </div>
-    <div class="col-xs-12 col-md-10">
-        <h5>{{theme.Title}}</h5>
-        <div class="row" markdown="{{theme.Description}}">
-        </div>
-        <div class="row">
-            <div class="col-xs-12 col-md-6 col-lg-4" ng-repeat="paint in paints">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        {{paint.Title}}
-                    </div>
-                    <div class="panel-body panel-default">
-                        <div class="row">
-                            <img ng-src="images/tableaux/{{paint.Filename}}" />
-                        </div>
-                        <div class="row" markdown="{{paint.Description}}">
-                            
-                        </div>
-                    </div>
+</div>
+<div class="col-xs-12 col-md-9">
+    <h5>{{theme.Title}}</h5>
+    <div class="row" markdown="{{theme.Description}}">
+    </div>
+</div>
+<div class="col-xs-12 col-md-12">
+    <div class="col-xs-12 col-md-6 col-lg-4" ng-repeat="paint in paints">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                {{paint.Title}}
+            </div>
+            <div class="panel-body panel-default">
+                <div class="row">
+                    <img ng-src="images/tableaux/{{paint.Filename}}" />
+                </div>
+                <div class="row" markdown="{{paint.Description}}">
+
                 </div>
             </div>
         </div>

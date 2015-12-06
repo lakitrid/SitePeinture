@@ -26,6 +26,10 @@
         $scope.gotoTheme = function (theme) {
             $location.path('theme/' + theme.Id);
         };
+
+        $scope.gotoThemeId = function (id) {
+            $location.path('theme/' + id);
+        };
     }])
     .service('ThemeService', ['$http', function ($http) {
         var themes = [];
