@@ -36,6 +36,10 @@
     background-color: #40ac62;
 }
 
+.panel-painting > div {
+    padding: 5px;
+}
+
 @media (min-width: 769px) {
     .panel-login {
         margin-right: 25%;
@@ -54,6 +58,12 @@
 
 .panel-login label {
     margin-bottom: 1em !important;
+}
+
+.contact-count {
+    color: gray;
+    font-weight: 100;
+    font-size: smaller;
 }
 
 /* NgDialog*/

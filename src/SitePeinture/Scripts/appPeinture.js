@@ -90,9 +90,25 @@
                 $location.path('theme/' + theme.Id);
             };
         }])
-    .controller('ContactController', ['$rootScope', function ($rootScope) {
+    .controller('ContactController', ['$rootScope', '$scope', '$http', function ($rootScope, $scope, $http) {
         $rootScope.IdentityService.isAuth();
         $rootScope.currentView = 'contact';
+
+        $scope.hasSuccess = false;
+
+        $scope.contact = {
+            Text: ""
+        };
+
+        $scope.Send = function () {
+            $scope.hasSuccess = false;
+
+            $http.post('service/contact', $scope.contact).then(function (successResult) {
+                $scope.hasSuccess = true;
+            }, function (errorResult) {
+
+            });
+        };
     }])
     .controller('AdminController', ['$rootScope', '$scope', '$http', 'ngDialog', 'ThemeService', '$location',
         function ($rootScope, $scope, $http, ngDialog, ThemeService, $location) {
