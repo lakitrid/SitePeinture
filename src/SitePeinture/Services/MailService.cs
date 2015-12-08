@@ -6,6 +6,7 @@ using SitePeinture.Models;
 using MimeKit;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
+using MailKit.Security;
 
 namespace SitePeinture.Services
 {
@@ -32,14 +33,15 @@ namespace SitePeinture.Services
         internal void SendMail(Contact contact)
         {
             MimeMessage message = new MimeMessage();
-            message.Subject = $"Contact de {contact.Name}, {contact.Mail}";
-            message.Body = new TextPart { Text = contact.Text };
+            message.Subject = $"Contact depuis le formulaire du site";
+            message.Body = new TextPart { Text = $"Message envoyé par [{contact.Name}]\r\n mail saisi [{contact.Mail}] \r\n Message : \r\n {contact.Text}" };
             message.From.Add(new MailboxAddress("contact", this._smtpFrom));
             message.To.Add(new MailboxAddress("contact", this._smtpTo));
 
             using (var client = new SmtpClient())
             {
-                client.Connect(this._smtpAddress, this._smtpPort, false);
+                client.Timeout = 3000;
+                client.Connect(this._smtpAddress, this._smtpPort, SecureSocketOptions.SslOnConnect);
 
                 // Note: since we don't have an OAuth2 token, disable
                 // the XOAUTH2 authentication mechanism.

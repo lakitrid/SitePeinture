@@ -53,6 +53,7 @@ namespace SitePeinture
             services.AddTransient<DaoTheme>();
             services.AddTransient<DaoEvent>();
             services.AddTransient<UserService>();
+            services.AddTransient<MailService>();
             services.AddMvc();
         }
 

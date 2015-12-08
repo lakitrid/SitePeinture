@@ -96,15 +96,14 @@
 
         $scope.hasSuccess = false;
 
-        $scope.contact = {
-            Text: ""
-        };
+        $scope.contact = {};
 
         $scope.Send = function () {
             $scope.hasSuccess = false;
 
             $http.post('service/contact', $scope.contact).then(function (successResult) {
                 $scope.hasSuccess = true;
+                $scope.contact = {};
             }, function (errorResult) {
 
             });
