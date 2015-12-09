@@ -66,6 +66,10 @@
     font-size: smaller;
 }
 
+.login-title {
+    text-align: center;
+}
+
 /* NgDialog*/
 
 @media (max-width: 768px) {

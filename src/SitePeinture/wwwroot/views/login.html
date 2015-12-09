@@ -1,27 +1,27 @@
 ﻿<div class="panel panel-default panel-login">
     <div class="panel panel-heading">
-        <h5 class="login-title">Login</h5>
+        <h5 class="login-title">Connexion</h5>
     </div>
     <div class="panel-body">
         <form class="form-horizontal" name="loginForm">
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': loginForm.login.$invalid && (loginForm.login.$touched || loginForm.$submitted)}">
                 <div class="col-xs-12">
-                    <label class="control-label">Login</label>
+                    <label class="control-label">Utilisateur</label>
                 </div>
                 <div class="col-xs-12">
-                    <input type="text" class="form-control" ng-model="user.Login" required />
+                    <input type="text" class="form-control" name="login" ng-model="user.Login" required />
                 </div>
             </div>
-            <div class="form-group">
+            <div class="form-group" ng-class="{'has-error': loginForm.password.$invalid && (loginForm.password.$touched || loginForm.$submitted)}">
                 <div class="col-xs-12">
-                    <label class="control-label">Password</label>
+                    <label class="control-label">Mot de passe</label>
                 </div>
                 <div class="col-xs-12">
-                    <input type="password" class="form-control" ng-model="user.Password" required/>
+                    <input type="password" class="form-control" name="password" ng-model="user.Password" required/>
                 </div>
             </div>
             <div class="alert alert-danger" ng-if="error">
-                <span>Login ou mot de passe incorrect</span>
+                <span>Utilisateur ou mot de passe incorrect</span>
             </div>
             <div class="form-group">
                 <div class="col-xs-12">
