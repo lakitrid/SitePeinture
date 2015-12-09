@@ -26,22 +26,22 @@
 <script type="text/ng-template" id="EditEvent">
     <h5>Ajout ou modification d'une exposition</h5>
     <form class="form-horizontal" name="eventForm">
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': eventForm.title.$invalid && (eventForm.title.$touched || eventForm.$submitted)}">
             <label class="col-sm-2 control-label">Titre</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="title" ng-model="event.Title" required>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': eventForm.expiration.$invalid && (eventForm.expiration.$touched || eventForm.$submitted)}">
             <label class="col-sm-2 control-label">Expiration</label>
             <div class="col-sm-10">
                 <input type="date" class="form-control" name="expiration" ng-model="event.ExpirationDate" required>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': eventForm.description.$invalid && (eventForm.description.$touched || eventForm.$submitted)}">
             <label for="description" class="col-sm-2 control-label">Description <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">(syntaxe)</a></label>
             <div class="col-sm-10">
-                <textarea class="form-control resize-v" ng-model="event.Description" required/>
+                <textarea class="form-control resize-v" name="description" ng-model="event.Description" required/>
             </div>
             <label class="col-sm-2 control-label">Aperçu</label>
             <div class="col-sm-10" markdown="{{event.Description}}">

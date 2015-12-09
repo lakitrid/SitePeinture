@@ -156,6 +156,8 @@
                 if (angular.isDefined(paint.file)) {
                     data.FileName = paint.file.Filename;
                     data.Data = paint.file.Data;
+                } else if (!$scope.isEdit) {
+                    return;
                 }
 
                 data.ThemeId = $scope.paint.currentTheme.Id;

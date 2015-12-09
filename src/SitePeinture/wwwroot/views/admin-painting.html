@@ -39,13 +39,13 @@
 <script type="text/ng-template" id="EditPainting">
     <h5>Ajout ou modification d'un tableau</h5>
     <form class="form-horizontal" name="paintingForm">
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': paintingForm.title.$invalid && (paintingForm.title.$touched || paintingForm.$submitted)}">
             <label class="col-sm-2 control-label">Titre</label>
             <div class="col-sm-10">
                 <input type="text" class="form-control" name="title" ng-model="paint.Title" required>
             </div>
         </div>
-        <div class="form-group" ng-if="!isEdit">
+        <div class="form-group" ng-if="!isEdit" ng-class="{'has-error': paintingForm.file.$invalid && (paintingForm.file.$touched || paintingForm.$submitted)}">
             <label for="file" class="col-sm-2 control-label">Fichier</label>
             <div class="col-sm-10">
                 <input class="form-control" type="file" id="file" name="file" fileread="paint.file" accept="image/*" required />
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-class="{'has-error': paintingForm.theme.$invalid && (paintingForm.theme.$touched || paintingForm.$submitted)}">
             <label for="theme" class="col-sm-2 control-label">Theme</label>
             <div class="col-sm-10">
                 <select class="form-control" name="theme" id="theme" ng-model="paint.currentTheme" required
