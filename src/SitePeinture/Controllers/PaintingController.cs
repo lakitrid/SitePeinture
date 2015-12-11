@@ -18,7 +18,14 @@ namespace SitePeinture.Controllers
         [HttpGet]
         public IEnumerable<Painting> Get()
         {
-            return Dao.GetAll().ToArray();            
+            return Dao.GetAll().ToArray();
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public Painting Get(int id)
+        {
+            return Dao.GetAll().Where(e => e.Id == id).FirstOrDefault();
         }
 
         [HttpPost]

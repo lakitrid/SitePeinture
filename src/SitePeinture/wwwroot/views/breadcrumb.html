@@ -1,0 +1,6 @@
+﻿<ul class="breadcrumb" ng-controller="BreadCrumbController">
+    <li ng-repeat="element in breadcrumbService.getElements()">
+        <a href="" ng-click="gotoElement(element)" ng-if="element.hasTarget">{{element.label}}</a>
+        <span ng-if="!element.hasTarget">{{element.label}}</span>
+    </li>
+</ul>

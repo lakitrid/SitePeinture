@@ -1,12 +1,5 @@
-﻿<div class="col-xs-12 col-md-3">
-    <div class="panel panel-default" ng-if="theme.ParentId !== 0">
-        <div class="panel-heading">
-            <h4>Theme parent</h4>
-        </div>
-        <div class="panel-body">
-            <a href="" ng-click="gotoThemeId(theme.ParentId)">{{theme.ParentTitle}}</a>
-        </div>
-    </div>
+﻿<ng-include src="'/views/breadcrumb.html'"></ng-include>
+<div class="col-xs-12 col-md-3">
     <div class="panel panel-default" ng-if="theme.HasChildrenTheme">
         <div class="panel-heading">
             <h4>Sous themes</h4>
@@ -29,7 +22,7 @@
             <div class="figure-block" ng-repeat="paint in paints">
                 <figure>
                     <figcaption class="transition-050 opacity85">
-                        <a href="">
+                        <a href="" ng-click="gotoPaint(paint.Id)">
                             <strong class="transition-050 title">{{paint.Title}}</strong>
                         </a>
                         <span ng-if="paint.Description" class="text transition-050 desc" markdown="{{paint.Description}}"></span>

@@ -125,14 +125,14 @@ WHERE Id = @id";
             {
                 string modification = reader.GetString(index);
 
-                value.ModificationDate = DateTime.Parse(modification);
+                value.ModificationDate = DateTime.ParseExact(modification, DateTimeFormat, CultureInfo.InvariantCulture);
             }
 
             index = reader.GetOrdinal("Expiration");
             if (!reader.IsDBNull(index))
             {
                 string expiration = reader.GetString(index);
-                value.ExpirationDate = DateTime.Parse(expiration);
+                value.ExpirationDate = DateTime.ParseExact(expiration, DateTimeFormat, CultureInfo.InvariantCulture);
             }
 
             return value;

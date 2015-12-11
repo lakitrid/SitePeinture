@@ -2,9 +2,10 @@
     'use strict';
 
     angular.module('theme', [
-        'ngRoute'        
+        'ngRoute'
     ])
-    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', function ($scope, $http, $routeParams, $location) {
+    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', 'BreadcrumbService',
+        function ($scope, $http, $routeParams, $location, BreadcrumbService) {
         $scope.theme = {};
 
         $scope.subthemes = [];
@@ -13,6 +14,18 @@
 
         $http.get('service/theme/' + $routeParams.themeId).then(function (result) {
             $scope.theme = result.data;
+
+            var elements = [];
+
+            if (angular.isDefined($scope.theme)) {
+                if ($scope.theme.ParentId !== 0) {
+                    elements.push({ label: $scope.theme.ParentTitle, hasTarget: true, target: '/theme/' + $scope.theme.ParentId });
+                }
+
+                elements.push({ label: $scope.theme.Title, hasTarget: false });
+            }
+
+            BreadcrumbService.setElements(elements);
         });
 
         $http.get('service/theme/subthemes/' + $routeParams.themeId).then(function (result) {
@@ -30,6 +43,10 @@
         $scope.gotoThemeId = function (id) {
             $location.path('theme/' + id);
         };
+
+        $scope.gotoPaint = function (paintId) {
+            $location.path('painting/' + paintId);
+        };
     }])
     .service('ThemeService', ['$http', function ($http) {
         var themes = [];
@@ -37,13 +54,13 @@
         var firstLevelThemes = [];
 
         var Load = function () {
-                $http.get('service/theme').then(function (result) {
-                    themes = result.data;
-                });
+            $http.get('service/theme').then(function (result) {
+                themes = result.data;
+            });
 
-                $http.get('service/theme/parents').then(function (result) {
-                    firstLevelThemes = result.data;
-                });
+            $http.get('service/theme/parents').then(function (result) {
+                firstLevelThemes = result.data;
+            });
         }
 
         return {

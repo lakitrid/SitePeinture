@@ -14,7 +14,7 @@
 
 .figure-block {
     position: relative;
-    display:inline-block;
+    display: inline-block;
     border-color: transparent;
     border-style: solid;
     border-width: 5px 5px 10px 5px;
@@ -58,7 +58,7 @@
 
     .module .text {
         color: #7A8B8B;
-        background-color: #fff;
+        background-color: #7A8B8B;
         font-size: 0.90em;
     }
 
@@ -73,11 +73,11 @@
         }
 
     .module figcaption a {
-        display: block;
         text-decoration: none;
     }
 
     .module .title {
+        position: relative;
         color: white;
         display: inline-block;
         padding: 5px;

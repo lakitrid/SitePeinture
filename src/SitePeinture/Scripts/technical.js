@@ -115,5 +115,25 @@
             }
         }
     }])
+    .controller('BreadCrumbController', ['$scope', '$location', 'BreadcrumbService', function ($scope, $location, BreadcrumbService) {
+        $scope.breadcrumbService = BreadcrumbService;
+
+        $scope.gotoElement = function (element) {
+            $location.path(element.target);
+        };
+    }])
+    .factory('BreadcrumbService', function () {
+        var elements = [];
+
+        return {
+            getElements: function () {
+                return elements;
+            },
+            setElements: function (elementsVal) {
+                elements = elementsVal;
+                elements.unshift({ label: 'Accueil', hasTarget: true, target: '/home' })
+            }
+        };
+    });
     ;
 })();

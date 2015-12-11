@@ -9,6 +9,7 @@
         'theme',
         'slider',
         'contact',
+        'painting',
         'ngAnimate'
     ]).
     config(['$routeProvider', 'ngDialogProvider', '$httpProvider', function ($routeProvider, ngDialogProvider, $httpProvider) {
@@ -24,6 +25,10 @@
           when('/theme/:themeId', {
               templateUrl: 'views/theme.html',
               controller: 'ThemeController'
+          }).
+          when('/painting/:paintingId', {
+              templateUrl: 'views/painting.html',
+              controller: 'PaintingController'
           }).
           when('/admin', {
               templateUrl: 'views/admin.html',
