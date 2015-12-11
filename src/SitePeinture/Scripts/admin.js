@@ -20,7 +20,7 @@
             $scope.home = false;
             $scope.event = false;
             $scope.theme = false;
-            $scope.painting = true;
+            $scope.painting = false;
             $scope.pass = false;
 
             $scope.paints = [];
