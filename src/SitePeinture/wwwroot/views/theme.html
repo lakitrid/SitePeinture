@@ -25,17 +25,19 @@
 </div>
 <div class="col-xs-12 col-md-12">
     <section class="module">
-        <section class="wraper">
-            <figure class='small' ng-repeat="paint in paints">
-                <figcaption class="transition-050 opacity85">
-                    <a href="">
-                        <strong class="transition-050 title">{{paint.Title}}</strong>
-                    </a>
-                    <span class="text transition-050 desc" markdown="{{paint.Description}}"></span>
-                </figcaption>
-                <img ng-src="images/tableaux/{{paint.Filename}}" alt="{{paint.Title}}">
-            </figure>
-        </section>
+        <div>
+            <div class="figure-block" ng-repeat="paint in paints">
+                <figure>
+                    <figcaption class="transition-050 opacity85">
+                        <a href="">
+                            <strong class="transition-050 title">{{paint.Title}}</strong>
+                        </a>
+                        <span ng-if="paint.Description" class="text transition-050 desc" markdown="{{paint.Description}}"></span>
+                    </figcaption>
+                    <img ng-src="images/tableaux/{{paint.Filename}}" alt="{{paint.Title}}">
+                </figure>
+            </div>
+        </div>
     </section>
 </div>
 
