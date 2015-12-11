@@ -24,20 +24,18 @@
     </div>
 </div>
 <div class="col-xs-12 col-md-12">
-    <div class="col-xs-12 col-md-6 col-lg-4" ng-repeat="paint in paints">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                {{paint.Title}}
-            </div>
-            <div class="panel-body panel-painting">
-                <div class="row">
-                    <img ng-src="images/tableaux/{{paint.Filename}}" />
-                </div>
-                <div class="row" markdown="{{paint.Description}}">
-
-                </div>
-            </div>
-        </div>
-    </div>
+    <section class="module">
+        <section class="wraper">
+            <figure class='small' ng-repeat="paint in paints">
+                <figcaption class="transition-050 opacity85">
+                    <a href="">
+                        <strong class="transition-050 title">{{paint.Title}}</strong>
+                    </a>
+                    <span class="text transition-050 desc" markdown="{{paint.Description}}"></span>
+                </figcaption>
+                <img ng-src="images/tableaux/{{paint.Filename}}" alt="{{paint.Title}}">
+            </figure>
+        </section>
+    </section>
 </div>
 

@@ -134,6 +134,7 @@
             $scope.isEdit = true;
             $scope.paint = angular.copy($scope.ngDialogData);
         } else {
+            $scope.paint = {};
             $scope.isEdit = false;
         }
 
