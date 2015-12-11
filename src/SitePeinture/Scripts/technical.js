@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('technical', [])
-    .constant("appVersion", "v1.0")
+    .constant("appVersion", "v1.0a")
     .factory('SiteHttpInterceptor', ['$q', 'appVersion', '$rootScope', function ($q, appVersion, $rootScope) {
         return {
             'request': function (config) {
