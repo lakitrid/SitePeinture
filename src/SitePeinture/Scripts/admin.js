@@ -57,7 +57,9 @@
 
             $scope.Delete = function (paint, index) {
                 $scope.confirm = ngDialog.openConfirm({
-                    template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+                    template: 'ConfirmDelete',
+                    controller: 'ConfirmDeleteController',
+                    className: 'ngdialog-theme-default confirm-dialog-theme'
                 }).then(function () {
                     $http.delete('service/painting/' + paint.Id);
                     Load();
@@ -74,7 +76,9 @@
 
             $scope.DeleteTheme = function (theme, index) {
                 $scope.confirm = ngDialog.openConfirm({
-                    template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+                    template: 'ConfirmDelete',
+                    controller: 'ConfirmDeleteController',
+                    className: 'ngdialog-theme-default confirm-dialog-theme'
                 }).then(function () {
                     $http.delete('service/theme/' + theme.Id);
                     Load();
@@ -91,7 +95,9 @@
 
             $scope.DeleteEvent = function (event, index) {
                 $scope.confirm = ngDialog.openConfirm({
-                    template: 'ConfirmDelete', controller: 'ConfirmDeleteController'
+                    template: 'ConfirmDelete',
+                    controller: 'ConfirmDeleteController',
+                    className: 'ngdialog-theme-default confirm-dialog-theme'
                 }).then(function () {
                     $http.delete('service/event/' + event.Id);
                     Load();
@@ -105,7 +111,7 @@
         .controller('AdminHomeController', ['$scope', '$http', function ($scope, $http) {
             $scope.article = { text: "" };
 
-            var Load = function() {
+            var Load = function () {
                 $http.get('service/home').then(function (result) {
                     $scope.article.text = result.data;
                 });

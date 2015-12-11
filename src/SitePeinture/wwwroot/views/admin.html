@@ -62,15 +62,17 @@
 </div>
 
 <script type="text/ng-template" id="ConfirmDelete">
-    <form class="form-horizontal" name="ConfirmForm">
-        <div class="form-group">
-            <h5>Voulez-vous vraiment supprimer cet élément ?</h5>
-        </div>
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button type="submit" class="btn btn-success" ng-click="confirm()">Oui</button>
-                <button type="submit" class="btn btn-danger" ng-click="closeThisDialog()">Non</button>
+    <div class="container-fluid">
+        <form class="form-horizontal" name="ConfirmForm">
+            <div class="form-group">
+                <h5>Voulez-vous vraiment supprimer cet élément ?</h5>
             </div>
-        </div>
-    </form>
+            <div class="form-group">
+                <div class="pull-right">
+                    <button type="submit" class="btn btn-success" ng-click="confirm()">Oui</button>
+                    <button type="submit" class="btn btn-danger" ng-click="closeThisDialog()">Non</button>
+                </div>
+            </div>
+        </form>
+    </div>
 </script>

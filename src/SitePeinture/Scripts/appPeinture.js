@@ -43,7 +43,7 @@
           });
 
         ngDialogProvider.setDefaults({
-            className: 'ngdialog-theme-default',
+            className: 'ngdialog-theme-default fullsize-theme-default',
             showClose: true,
             closeByDocument: false,
             closeByEscape: false

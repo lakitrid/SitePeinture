@@ -1,4 +1,100 @@
-﻿.spinner {
+﻿.mouse_select {
+    cursor: pointer;
+}
+
+.thumbnail {
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.small-image {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.img-popup {
+    height: 200px;
+}
+
+    .img-popup img {
+        max-width: 90%;
+        max-height: 200px;
+        margin-left: 50%;
+        transform: translateX(-50%);
+    }
+
+.resize-v {
+    resize: vertical;
+}
+
+.home-article-edit {
+    min-height: 25vh;
+}
+
+.showMenu {
+    display: block !important;
+}
+
+.themeSubTheme {
+    background-color: #40ac62;
+}
+
+.panel-painting > div {
+    padding: 5px;
+}
+
+@media (min-width: 769px) {
+    .panel-login {
+        margin-right: 25%;
+        margin-left: 25%;
+        margin-top: 5%;
+    }
+}
+
+@media (max-width: 768px) {
+    .panel-login {
+        margin-right: 10%;
+        margin-left: 10%;
+        margin-top: 5%;
+    }
+}
+
+.panel-login label {
+    margin-bottom: 1em !important;
+}
+
+.contact-count {
+    color: gray;
+    font-weight: 100;
+    font-size: smaller;
+}
+
+.login-title {
+    text-align: center;
+}
+
+/* NgDialog*/
+
+.confirm-dialog-theme .ngdialog-content {
+    max-height: 150px !important;
+}
+
+@media (max-width: 768px) {
+    .fullsize-theme-default .ngdialog-content {
+        width: 90vw !important;
+        min-height: 90vh !important;
+    }
+}
+
+@media (min-width: 769px) {
+    .fullsize-theme-default .ngdialog-content {
+        width: 60vw !important;
+        min-height: 60vh !important;
+    }
+}
+
+
+.spinner {
     position: fixed;
     width: 100%;
     height: 100%;
