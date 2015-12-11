@@ -46,6 +46,9 @@
 
         $httpProvider.interceptors.push('SiteHttpInterceptor');
     }]).
+    run(['$rootScope', function ($rootScope) {
+        $rootScope.connection = { count: 0 };
+    }]).
     controller('MainController', ['$rootScope', '$location', '$scope', '$http', 'IdentityService',
         function ($rootScope, $location, $scope, $http, IdentityService) {
             $rootScope.goto = function (target) {

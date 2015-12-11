@@ -3,9 +3,11 @@
 
     angular.module('technical', [])
     .constant("appVersion", "v1.0")
-    .factory('SiteHttpInterceptor', ['$q', 'appVersion', function ($q, appVersion) {
+    .factory('SiteHttpInterceptor', ['$q', 'appVersion', '$rootScope', function ($q, appVersion, $rootScope) {
         return {
             'request': function (config) {
+
+                $rootScope.connection.count++;
 
                 // Add app version in the request to bypass the cache for static assets
                 if (config.url.search(/^(\.?\/)?(css|app|views|scripts)\//) === 0) {
@@ -17,6 +19,14 @@
                 }
 
                 return config || $q.when(config);
+            },
+            'response': function (response) {
+                $rootScope.connection.count--;
+                return response || $q.when(response);
+            },
+            'responseError': function (response) {
+                $rootScope.connection.count--;
+                return response || $q.when(response);
             }
         };
     }])
