@@ -61,8 +61,10 @@
         <h4>
             <span>{{paint.Title}}</span>
         </h4>
-        <img ng-src="/images/tableaux/{{paint.Filename}}" />
-        <div markdown="{{paint.Description}}">
+        <div class="col-md-6 col-xs-12">
+            <img ng-src="/images/tableaux/{{paint.Filename}}" />
+        </div>
+        <div class="col-md-6 col-xs-12" markdown="{{paint.Description}}">
         </div>
     </div>
     <div class="go-right mouse_select" ng-click="next()">
