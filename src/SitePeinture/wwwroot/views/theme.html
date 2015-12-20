@@ -16,21 +16,32 @@
     <div class="row" markdown="{{theme.Description}}">
     </div>
 </div>
-<div class="col-xs-12 col-md-12">
-    <section class="module">
-        <div>
-            <div class="figure-block" ng-repeat="paint in paints">
-                <figure>
-                    <figcaption class="transition-050 opacity85">
-                        <a href="" ng-click="gotoPaint(paint.Id)">
-                            <strong class="transition-050 title">{{paint.Title}}</strong>
-                        </a>
-                        <span ng-if="paint.Description" class="text transition-050 desc" markdown="{{paint.Description}}"></span>
-                    </figcaption>
-                    <img ng-src="images/tableaux/{{paint.Filename}}" alt="{{paint.Title}}">
-                </figure>
+
+<div class="col-xs-12 col-md-12 paintView">
+    <div class="go-left mouse_select" ng-click="prev()">
+        <i class="fa fa-chevron-left fa-2x">
+        </i>
+    </div>
+    <div ng-repeat="paint in paints" ng-if="$index == index">
+        <h4>
+            <span>{{paint.Title}}</span>
+            <i class="fa fa-pause pull-right mouse_select" ng-click="setPause()" ng-if="!pause"></i>
+            <i class="fa fa-play pull-right mouse_select" ng-click="restart()" ng-if="pause"></i>
+        </h4>
+    </div>
+    <div id="img-wrapper">
+        <div ng-repeat="paint in paints" ng-if="$index == index" class="fade">
+            <div>
+                <img ng-src="/images/tableaux/{{paint.Filename}}" />
             </div>
         </div>
-    </section>
+    </div>
+    <div ng-repeat="paint in paints" ng-if="$index == index">
+        <div class="col-xs-12" markdown="{{paint.Description}}">
+        </div>
+    </div>
+    <div class="go-right mouse_select" ng-click="next()">
+        <i class="fa fa-chevron-right fa-2x">
+        </i>
+    </div>
 </div>
-

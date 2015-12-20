@@ -12,47 +12,58 @@
         'painting',
         'ngAnimate'
     ]).
-    config(['$routeProvider', 'ngDialogProvider', '$httpProvider', function ($routeProvider, ngDialogProvider, $httpProvider) {
-        $routeProvider.
-          when('/home', {
-              templateUrl: 'views/home.html',
-              controller: 'HomeController'
-          }).
-          when('/contact', {
-              templateUrl: 'views/contact.html',
-              controller: 'ContactController'
-          }).
-          when('/theme/:themeId', {
-              templateUrl: 'views/theme.html',
-              controller: 'ThemeController'
-          }).
-          when('/painting/:paintingId', {
-              templateUrl: 'views/painting.html',
-              controller: 'PaintingController'
-          }).
-          when('/admin', {
-              templateUrl: 'views/admin.html',
-              controller: 'AdminController'
-          }).
-          when('/login', {
-              templateUrl: 'views/login.html',
-              controller: 'LoginController'
-          }).
-          otherwise({
-              redirectTo: '/home'
-          });
+    config(['$routeProvider', 'ngDialogProvider', '$httpProvider',
+        function ($routeProvider, ngDialogProvider, $httpProvider) {
+            $routeProvider.
+              when('/home', {
+                  templateUrl: 'views/home.html',
+                  controller: 'HomeController'
+              }).
+              when('/contact', {
+                  templateUrl: 'views/contact.html',
+                  controller: 'ContactController'
+              }).
+              when('/theme/:themeId', {
+                  templateUrl: 'views/theme.html',
+                  controller: 'ThemeController'
+              }).
+              when('/painting/:paintingId', {
+                  templateUrl: 'views/painting.html',
+                  controller: 'PaintingController'
+              }).
+              when('/admin', {
+                  templateUrl: 'views/admin.html',
+                  controller: 'AdminController'
+              }).
+              when('/login', {
+                  templateUrl: 'views/login.html',
+                  controller: 'LoginController'
+              }).
+              otherwise({
+                  redirectTo: '/home'
+              });
 
-        ngDialogProvider.setDefaults({
-            className: 'ngdialog-theme-default fullsize-theme-default',
-            showClose: true,
-            closeByDocument: false,
-            closeByEscape: false
-        });
+            ngDialogProvider.setDefaults({
+                className: 'ngdialog-theme-default fullsize-theme-default',
+                showClose: true,
+                closeByDocument: false,
+                closeByEscape: false
+            });
 
-        $httpProvider.interceptors.push('SiteHttpInterceptor');
-    }]).
-    run(['$rootScope', function ($rootScope) {
+            $httpProvider.interceptors.push('SiteHttpInterceptor');
+        }]).
+    run(['$rootScope', '$location', function ($rootScope, $location) {
         $rootScope.connection = { count: 0 };
+
+        var gaEnable = $location.host() === 'edumortier.fr' || $location.host() === 'www.edumortier.fr';
+
+        if (gaEnable) {
+            ga('create', 'UA-71336595-1', 'auto');
+
+            $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+                ga('send', 'pageview', $location.url());
+            });
+        }
     }]).
     controller('MainController', ['$rootScope', '$location', '$scope', '$http', 'IdentityService',
         function ($rootScope, $location, $scope, $http, IdentityService) {

@@ -4,50 +4,124 @@
     angular.module('theme', [
         'ngRoute'
     ])
-    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', 'BreadcrumbService',
-        function ($scope, $http, $routeParams, $location, BreadcrumbService) {
-        $scope.theme = {};
+    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', 'BreadcrumbService', '$interval',
+        function ($scope, $http, $routeParams, $location, BreadcrumbService, $interval) {
+            $scope.stop;
 
-        $scope.subthemes = [];
+            $scope.pause = false;
 
-        $scope.paints = [];
+            $scope.theme = {};
 
-        $http.get('service/theme/' + $routeParams.themeId).then(function (result) {
-            $scope.theme = result.data;
+            $scope.subthemes = [];
 
-            var elements = [];
+            $scope.paints = [];
 
-            if (angular.isDefined($scope.theme)) {
-                if ($scope.theme.ParentId !== 0) {
-                    elements.push({ label: $scope.theme.ParentTitle, hasTarget: true, target: '/theme/' + $scope.theme.ParentId });
+            $scope.currentPaint = {};
+
+            $http.get('service/theme/' + $routeParams.themeId).then(function (result) {
+                $scope.theme = result.data;
+
+                var elements = [];
+
+                if (angular.isDefined($scope.theme)) {
+                    if ($scope.theme.ParentId !== 0) {
+                        elements.push({ label: $scope.theme.ParentTitle, hasTarget: true, target: '/theme/' + $scope.theme.ParentId });
+                    }
+
+                    elements.push({ label: $scope.theme.Title, hasTarget: false });
                 }
 
-                elements.push({ label: $scope.theme.Title, hasTarget: false });
-            }
+                BreadcrumbService.setElements(elements);
+            });
 
-            BreadcrumbService.setElements(elements);
-        });
+            $http.get('service/theme/subthemes/' + $routeParams.themeId).then(function (result) {
+                $scope.subthemes = result.data;
+            });
 
-        $http.get('service/theme/subthemes/' + $routeParams.themeId).then(function (result) {
-            $scope.subthemes = result.data;
-        });
+            $http.get('service/painting/theme/' + $routeParams.themeId).then(function (result) {
+                $scope.paints = result.data;
+                if (angular.isDefined($scope.paints) && $scope.paints.length > 0) {
+                    $scope.currentPaint = $scope.paints[0];
+                    $scope.index = 0;
 
-        $http.get('service/painting/theme/' + $routeParams.themeId).then(function (result) {
-            $scope.paints = result.data;
-        });
+                    startInterval();
+                }
+            });
 
-        $scope.gotoTheme = function (theme) {
-            $location.path('theme/' + theme.Id);
-        };
+            $scope.prev = function () {
+                if ($scope.index == 0) {
+                    $scope.index = $scope.paints.length - 1;
+                } else {
+                    $scope.index--;
+                }
 
-        $scope.gotoThemeId = function (id) {
-            $location.path('theme/' + id);
-        };
+                $scope.currentPaint = $scope.paints[$scope.index];
 
-        $scope.gotoPaint = function (paintId) {
-            $location.path('painting/' + paintId);
-        };
-    }])
+                if (!$scope.pause) {
+                    resetInterval();
+                }
+            };
+
+            $scope.next = function () {
+                if ($scope.index > $scope.paints.length - 2) {
+                    $scope.index = 0;
+                } else {
+                    $scope.index++;
+                }
+
+                $scope.currentPaint = $scope.paints[$scope.index];
+
+                if (!$scope.pause) {
+                    resetInterval();
+                }
+            };
+
+            $scope.setPause = function () {
+                $scope.pause = true;
+                stopInterval();
+            };
+
+            $scope.restart = function () {
+                $scope.pause = false;
+                startInterval();
+            };
+
+            var resetInterval = function () {
+                stopInterval();
+                startInterval();
+            };
+
+            var startInterval = function () {
+                if (angular.isUndefined($scope.stop)) {
+                    $scope.stop = $interval(function () {
+                        $scope.next();
+                    }, 4000);
+                }
+            };
+
+            var stopInterval = function () {
+                if (angular.isDefined($scope.stop)) {
+                    $interval.cancel($scope.stop);
+                    $scope.stop = undefined;
+                }
+            };
+
+            $scope.gotoTheme = function (theme) {
+                $location.path('theme/' + theme.Id);
+            };
+
+            $scope.gotoThemeId = function (id) {
+                $location.path('theme/' + id);
+            };
+
+            $scope.gotoPaint = function (paintId) {
+                $location.path('painting/' + paintId);
+            };
+
+            $scope.$on('$destroy', function () {
+                stopInterval();
+            });
+        }])
     .service('ThemeService', ['$http', function ($http) {
         var themes = [];
 

@@ -1,0 +1,114 @@
+﻿.paintView {
+    background-color: whitesmoke;
+}
+
+    .paintView #img-wrapper {
+        height: 60vh;
+        position: relative;
+        min-width: 100%;
+    }
+
+        .paintView #img-wrapper div {
+            min-width: 100%;
+        }
+
+        .paintView #img-wrapper img {
+            margin-left: 50%;
+            transform: translateX(-50%);
+            max-height: 59vh;
+            box-shadow: 0px 0px 5px #999;
+        }
+
+    .paintView h4 {
+        text-align: center;
+    }
+
+.go-left {
+    position: absolute;
+    top: 50px;
+    left: 5px;
+    width: 40px;
+    height: calc(100% - 50px);
+}
+
+    .go-left > i {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+.go-right {
+    position: absolute;
+    top: 50px;
+    right: 0;
+    width: 30px;
+    height: calc(100% - 50px);
+    padding-left: 5px;
+}
+
+    .go-right > i {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+
+/* there is no need to define anything inside of the destination
+CSS class since the keyframe will take charge of the animation */
+.fade {
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 60vh;
+}
+
+    .fade.ng-leave {
+        animation: my_fade_animation 1s linear;
+        -webkit-animation: my_fade_animation 1s linear;
+    }
+
+    .fade.ng-enter {
+        animation: my_fade_enter_animation 1s linear;
+        -webkit-animation: my_fade_enter_animation 1s linear;
+    }
+
+@keyframes my_fade_animation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes my_fade_animation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+@keyframes my_fade_enter_animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+@-webkit-keyframes my_fade_enter_animation {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
