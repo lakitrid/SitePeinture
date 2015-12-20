@@ -6,12 +6,16 @@ using Microsoft.AspNet.Mvc;
 using SitePeinture.Models;
 using SitePeinture.Dao;
 using Microsoft.AspNet.Authorization;
+using SitePeinture.Services;
 
 namespace SitePeinture.Controllers
 {
     [Route("service/[controller]")]
     public class PaintingController : Controller
     {
+        [FromServices]
+        public PaintingService PaintingService { get; set; }
+
         [FromServices]
         public DaoPainting Dao { get; set; }
         
@@ -54,7 +58,7 @@ namespace SitePeinture.Controllers
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {
-            Dao.Delete(id);
+            PaintingService.Delete(id);
         }
     }
 }

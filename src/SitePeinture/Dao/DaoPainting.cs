@@ -25,7 +25,6 @@ namespace SitePeinture.Dao
 
                 using (SqliteDataReader reader = command.ExecuteReader())
                 {
-
                     while (reader.Read())
                     {
                         result.Add(this.FillPainting(reader));
@@ -122,6 +121,32 @@ WHERE Id = @id";
                 command.ExecuteNonQuery();
             });
         }
+
+        public Painting Get(int id)
+        {
+            Painting result = null;
+
+            this.Execute((command) =>
+            {
+                command.CommandText = @"SELECT p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle 
+FROM Painting p inner join Theme t on t.Id = p.ThemeId
+WHERE p.Id = @id ";
+
+                command.Parameters.Add("@id", SqliteType.Integer);
+                command.Parameters["@id"].Value = id;
+
+                using (SqliteDataReader reader = command.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        result = this.FillPainting(reader);
+                    }
+                }
+            });
+
+            return result;
+        }
+
 
         private Painting FillPainting(SqliteDataReader reader)
         {

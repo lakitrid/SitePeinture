@@ -17,6 +17,12 @@
     </div>
 </div>
 
+<div class="col-xs-12 col-md-12">
+    <div class="thumbnail-list mouse_select" ng-repeat="paint in paints" ng-click="select($index)">
+        <img ng-src="/images/tableaux/{{paint.Filename}}" />
+    </div>
+</div>
+
 <div class="col-xs-12 col-md-12 paintView">
     <div class="go-left mouse_select" ng-click="prev()">
         <i class="fa fa-chevron-left fa-2x">

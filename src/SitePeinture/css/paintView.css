@@ -112,3 +112,14 @@ CSS class since the keyframe will take charge of the animation */
         opacity: 1;
     }
 }
+
+.thumbnail-list {
+    display: inline-block;
+    margin: 5px;
+    border: 2px solid #848484;
+}
+
+    .thumbnail-list img {
+        max-height: 30px;
+        max-width: 50px;
+    }

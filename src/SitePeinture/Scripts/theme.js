@@ -16,8 +16,6 @@
 
             $scope.paints = [];
 
-            $scope.currentPaint = {};
-
             $http.get('service/theme/' + $routeParams.themeId).then(function (result) {
                 $scope.theme = result.data;
 
@@ -41,7 +39,6 @@
             $http.get('service/painting/theme/' + $routeParams.themeId).then(function (result) {
                 $scope.paints = result.data;
                 if (angular.isDefined($scope.paints) && $scope.paints.length > 0) {
-                    $scope.currentPaint = $scope.paints[0];
                     $scope.index = 0;
 
                     startInterval();
@@ -55,8 +52,6 @@
                     $scope.index--;
                 }
 
-                $scope.currentPaint = $scope.paints[$scope.index];
-
                 if (!$scope.pause) {
                     resetInterval();
                 }
@@ -69,7 +64,13 @@
                     $scope.index++;
                 }
 
-                $scope.currentPaint = $scope.paints[$scope.index];
+                if (!$scope.pause) {
+                    resetInterval();
+                }
+            };
+
+            $scope.select = function (index) {
+                $scope.index = index;
 
                 if (!$scope.pause) {
                     resetInterval();
