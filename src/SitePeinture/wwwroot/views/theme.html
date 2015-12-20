@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<div class="col-xs-12 col-md-12 paintView">
+<div class="col-xs-12 col-md-12 paintView" ng-if="!theme.WithText && paints.length > 0">
     <div class="go-left mouse_select" ng-click="prev()">
         <i class="fa fa-chevron-left fa-2x">
         </i>
@@ -44,6 +44,25 @@
     </div>
     <div ng-repeat="paint in paints" ng-if="$index == index">
         <div class="col-xs-12" markdown="{{paint.Description}}">
+        </div>
+    </div>
+    <div class="go-right mouse_select" ng-click="next()">
+        <i class="fa fa-chevron-right fa-2x">
+        </i>
+    </div>
+</div>
+
+<div class="col-xs-12 col-md-12 paintTextView" ng-if="theme.WithText && paints.length > 0">
+    <div class="go-left mouse_select" ng-click="prev()">
+        <i class="fa fa-chevron-left fa-2x">
+        </i>
+    </div>
+    <div ng-repeat="paint in paints" ng-if="$index == index" id="paintContent">
+        <h4>
+            <span>{{paint.Title}}</span>
+        </h4>
+        <img ng-src="/images/tableaux/{{paint.Filename}}" />
+        <div markdown="{{paint.Description}}">
         </div>
     </div>
     <div class="go-right mouse_select" ng-click="next()">

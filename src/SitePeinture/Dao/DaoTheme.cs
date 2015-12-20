@@ -20,7 +20,7 @@ namespace SitePeinture.Dao
 
             this.Execute((command) =>
             {
-                command.CommandText = @"SELECT t1.Id, t1.ParentId,t1.Title, t1.Description, t2.Title AS ParentTitle
+                command.CommandText = @"SELECT t1.Id, t1.ParentId,t1.Title, t1.Description, t2.Title AS ParentTitle, t1.WithText
 FROM Theme AS t1
 LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
 
@@ -43,10 +43,11 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                 // Add the theme 
                 this.Execute((command) =>
                 {
-                    command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description]) VALUES(@parentId, @title,@description)";
+                    command.CommandText = "INSERT INTO [Theme] ([ParentId], [Title], [Description], [WithText]) VALUES(@parentId, @title,@description, @withText)";
                     command.Parameters.Add("@parentId", SqliteType.Integer);
                     command.Parameters.Add("@title", SqliteType.Text);
                     command.Parameters.Add("@description", SqliteType.Text);
+                    command.Parameters.Add("@withText", SqliteType.Integer);
 
                     command.Parameters["@title"].Value = theme.Title;
 
@@ -68,6 +69,8 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                         command.Parameters["@description"].Value = theme.Description;
                     }
 
+                    command.Parameters["@withText"].Value = theme.WithText;
+
                     command.ExecuteNonQuery();
                 });
             }
@@ -76,11 +79,13 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                 // Update the exsiting theme
                 this.Execute((command) =>
                 {
-                    command.CommandText = "UPDATE [Theme] SET [ParentId]=@parentId, [Title] = @title, [Description]=@description WHERE [Id]= @id";
+                    command.CommandText = "UPDATE [Theme] SET [ParentId]=@parentId, [Title] = @title, [Description]= @description, [WithText]= @withText WHERE [Id]= @id";
                     command.Parameters.Add("@id", SqliteType.Integer);
                     command.Parameters.Add("@parentId", SqliteType.Integer);
                     command.Parameters.Add("@title", SqliteType.Text);
                     command.Parameters.Add("@description", SqliteType.Text);
+                    command.Parameters.Add("@withText", SqliteType.Integer);
+
                     command.Parameters["@id"].Value = theme.Id;
                     command.Parameters["@title"].Value = theme.Title;
 
@@ -101,6 +106,8 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
                     {
                         command.Parameters["@description"].Value = theme.Description;
                     }
+
+                    command.Parameters["@withText"].Value = theme.WithText;
 
                     command.ExecuteNonQuery();
                 });
@@ -151,6 +158,12 @@ LEFT JOIN Theme AS t2 ON t1.ParentId = t2.Id";
             if (!reader.IsDBNull(index))
             {
                 value.ParentTitle = reader.GetString(index);
+            }
+
+            index = reader.GetOrdinal("WithText");
+            if(!reader.IsDBNull(index))
+            {
+                value.WithText = reader.GetBoolean(index);
             }
 
             return value;

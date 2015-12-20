@@ -40,8 +40,9 @@
                 $scope.paints = result.data;
                 if (angular.isDefined($scope.paints) && $scope.paints.length > 0) {
                     $scope.index = 0;
-
-                    startInterval();
+                    if (!$scope.theme.WithText) {
+                        startInterval();
+                    }
                 }
             });
 
@@ -52,9 +53,7 @@
                     $scope.index--;
                 }
 
-                if (!$scope.pause) {
-                    resetInterval();
-                }
+                resetInterval();
             };
 
             $scope.next = function () {
@@ -64,17 +63,13 @@
                     $scope.index++;
                 }
 
-                if (!$scope.pause) {
-                    resetInterval();
-                }
+                resetInterval();
             };
 
             $scope.select = function (index) {
                 $scope.index = index;
 
-                if (!$scope.pause) {
-                    resetInterval();
-                }
+                resetInterval();
             };
 
             $scope.setPause = function () {
@@ -88,8 +83,10 @@
             };
 
             var resetInterval = function () {
-                stopInterval();
-                startInterval();
+                if (!$scope.pause && !$scope.theme.WithText) {
+                    stopInterval();
+                    startInterval();
+                }
             };
 
             var startInterval = function () {
