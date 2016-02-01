@@ -3,16 +3,18 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>Titre</th>
-            <th class="hidden-sm hidden-xs">Theme</th>
-            <th class="hidden-sm hidden-xs">Slider</th>
-            <th class="hidden-sm hidden-xs">Nom de fichier</th>
+            <th ng-click="Order('Title')">Titre<span ng-class="IsOrder('Title')"></span></th>
+            <th ng-click="Order('ThemeTitle')" class="hidden-sm hidden-xs">Theme<span ng-class="IsOrder('ThemeTitle')"></span></th>
+            <th ng-click="Order('OnSlider')" class="hidden-sm hidden-xs">Slider<span ng-class="IsOrder('OnSlider')"></span></th>
+            <th ng-click="Order('Available')" class="hidden-sm hidden-xs">Disponible<span ng-class="IsOrder('Available')"></span></th>
+            <th ng-click="Order('Price')">Prix<span ng-class="IsOrder('Price')"></span></th>
+            <th ng-click="Order('Filename')" class="hidden-sm hidden-xs">Nom de fichier<span ng-class="IsOrder('Filename')"></span></th>
             <th></th>
             <th style="width:50px;"></th>
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="paint in paints" ng-mouseenter="paint.display = true" ng-mouseleave="paint.display = false">
+        <tr ng-repeat="paint in paints | orderBy:order:reverse" ng-mouseenter="paint.display = true" ng-mouseleave="paint.display = false">
             <td>
                 {{paint.Title}}
             </td>
@@ -21,6 +23,12 @@
             </td>
             <td class="hidden-sm hidden-xs">
                 <input type="checkbox" ng-model="paint.OnSlider" disabled />
+            </td>
+            <td class="hidden-sm hidden-xs">
+                <input type="checkbox" ng-model="paint.Available" disabled />
+            </td>
+            <td>
+                {{paint.Price}} €
             </td>
             <td class="hidden-sm hidden-xs">
                 {{paint.Filename}}
@@ -69,6 +77,18 @@
             <label class="col-sm-2 control-label">Slider</label>
             <div class="col-sm-10">
                 <input type="checkbox" class="form-control" name="slider" ng-model="paint.OnSlider">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Disponible</label>
+            <div class="col-sm-10">
+                <input type="checkbox" class="form-control" name="available" ng-model="paint.Available">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">Prix</label>
+            <div class="col-sm-10">
+                <input type="number" class="form-control" name="price" ng-model="paint.Price">
             </div>
         </div>
         <div class="form-group">

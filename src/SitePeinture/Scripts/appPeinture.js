@@ -10,7 +10,9 @@
         'slider',
         'contact',
         'painting',
-        'ngAnimate'
+        'ngAnimate',
+        'ngMaterial',
+        'datePicker'
     ]).
     config(['$routeProvider', 'ngDialogProvider', '$httpProvider',
         function ($routeProvider, ngDialogProvider, $httpProvider) {

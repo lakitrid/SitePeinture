@@ -4,8 +4,8 @@
     angular.module('theme', [
         'ngRoute'
     ])
-    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', 'BreadcrumbService', '$interval',
-        function ($scope, $http, $routeParams, $location, BreadcrumbService, $interval) {
+    .controller('ThemeController', ['$scope', '$http', '$routeParams', '$location', 'BreadcrumbService', '$interval', 'themeInterval',
+        function ($scope, $http, $routeParams, $location, BreadcrumbService, $interval, themeInterval) {
             $scope.stop;
 
             $scope.pause = false;
@@ -90,10 +90,10 @@
             };
 
             var startInterval = function () {
-                if (angular.isUndefined($scope.stop)) {
+                if (angular.isUndefined($scope.stop) && !$scope.theme.WithText) {
                     $scope.stop = $interval(function () {
                         $scope.next();
-                    }, 4000);
+                    }, themeInterval);
                 }
             };
 

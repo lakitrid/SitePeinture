@@ -21,7 +21,9 @@ namespace SitePeinture.Dao
 
             this.Execute((command) =>
             {
-                command.CommandText = "Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle from Painting p inner join Theme t on t.Id = p.ThemeId";
+                command.CommandText = @"Select p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle, p.Price, p.Available 
+from Painting p 
+inner join Theme t on t.Id = p.ThemeId";
 
                 using (SqliteDataReader reader = command.ExecuteReader())
                 {
@@ -51,19 +53,24 @@ namespace SitePeinture.Dao
 
                 this.Execute((command) =>
                 {
-                    command.CommandText = @"INSERT INTO Painting (Title, ThemeId, Description, Filename, OnSlider)
-VALUES(@title, @themeId,@description, @fileName, @onslider)";
+                    command.CommandText = @"INSERT INTO Painting (Title, ThemeId, Description, Filename, OnSlider, Price, Available)
+VALUES(@title, @themeId,@description, @fileName, @onslider, @price, @available)";
 
                     command.Parameters.Add("@title", SqliteType.Text);
                     command.Parameters.Add("@themeId", SqliteType.Integer);
                     command.Parameters.Add("@description", SqliteType.Text);
                     command.Parameters.Add("@fileName", SqliteType.Text);
                     command.Parameters.Add("@onslider", SqliteType.Integer);
+                    command.Parameters.Add("@price", SqliteType.Integer);
+                    command.Parameters.Add("@available", SqliteType.Integer);
 
                     command.Parameters["@title"].Value = painting.Title;
                     command.Parameters["@themeId"].Value = painting.ThemeId;
                     command.Parameters["@fileName"].Value = painting.Filename;
                     command.Parameters["@onslider"].Value = painting.OnSlider;
+                    command.Parameters["@price"].Value = painting.Price;
+                    command.Parameters["@available"].Value = painting.Available;
+
                     if (string.IsNullOrWhiteSpace(painting.Description))
                     {
                         command.Parameters["@description"].Value = DBNull.Value;
@@ -84,18 +91,25 @@ VALUES(@title, @themeId,@description, @fileName, @onslider)";
 SET Title =@title,
 	ThemeId =@themeId,
 	Description = @description,
-	OnSlider = @onslider
+	OnSlider = @onslider,
+    Price = @price, 
+    Available = @available
 WHERE Id = @id";
                     command.Parameters.Add("@id", SqliteType.Integer);
                     command.Parameters.Add("@title", SqliteType.Text);
                     command.Parameters.Add("@themeId", SqliteType.Integer);
                     command.Parameters.Add("@description", SqliteType.Text);
                     command.Parameters.Add("@onslider", SqliteType.Integer);
+                    command.Parameters.Add("@price", SqliteType.Integer);
+                    command.Parameters.Add("@available", SqliteType.Integer);
 
                     command.Parameters["@id"].Value = painting.Id;
                     command.Parameters["@title"].Value = painting.Title;
                     command.Parameters["@themeId"].Value = painting.ThemeId;
                     command.Parameters["@onslider"].Value = painting.OnSlider;
+                    command.Parameters["@price"].Value = painting.Price;
+                    command.Parameters["@available"].Value = painting.Available;
+
                     if (string.IsNullOrWhiteSpace(painting.Description))
                     {
                         command.Parameters["@description"].Value = DBNull.Value;
@@ -128,7 +142,7 @@ WHERE Id = @id";
 
             this.Execute((command) =>
             {
-                command.CommandText = @"SELECT p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle 
+                command.CommandText = @"SELECT p.Id, p.Title, p.ThemeId, p.Filename, p.Description, p.OnSlider, t.Title ThemeTitle, p.Price, p.Available 
 FROM Painting p inner join Theme t on t.Id = p.ThemeId
 WHERE p.Id = @id ";
 
@@ -194,6 +208,17 @@ WHERE p.Id = @id ";
                 value.OnSlider = reader.GetBoolean(index);
             }
 
+            index = reader.GetOrdinal("Price");
+            if (!reader.IsDBNull(index))
+            {
+                value.Price = reader.GetInt32(index);
+            }
+
+            index = reader.GetOrdinal("Available");
+            if (!reader.IsDBNull(index))
+            {
+                value.Available = reader.GetBoolean(index);
+            }
 
             return value;
         }

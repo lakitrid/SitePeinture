@@ -73,12 +73,11 @@ namespace SitePeinture
             app.UseIISPlatformHandler();
 
             // Configure the HTTP request pipeline.
-            app.UseDefaultFiles(new DefaultFilesOptions() { DefaultFileNames = new[] { "index.html" } });
             app.UseStaticFiles();
 
             // Add MVC to the request pipeline.
             app.UseIdentity();
-            app.UseMvc();
+            app.UseMvcWithDefaultRoute();
         }
     }
 }

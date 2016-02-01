@@ -45,6 +45,12 @@
     <div ng-repeat="paint in paints" ng-if="$index == index">
         <div class="col-xs-12" markdown="{{paint.Description}}">
         </div>
+        <div class="col-xs-12 painting-available" ng-if="paint.Available">
+            {{paint.Price}} €
+        </div>
+        <div class="col-xs-12 painting-unavailable" ng-if="!paint.Available">
+            Indisponible
+        </div>
     </div>
     <div class="go-right mouse_select" ng-click="next()">
         <i class="fa fa-chevron-right fa-2x">
@@ -65,6 +71,12 @@
             <img ng-src="/images/tableaux/{{paint.Filename}}" />
         </div>
         <div class="col-md-6 col-xs-12" markdown="{{paint.Description}}">
+        </div>
+        <div class="col-xs-12 painting-available" ng-if="paint.Available">
+            {{paint.Price}} €
+        </div>
+        <div class="col-xs-12 painting-unavailable" ng-if="!paint.Available">
+            Indisponible
         </div>
     </div>
     <div class="go-right mouse_select" ng-click="next()">

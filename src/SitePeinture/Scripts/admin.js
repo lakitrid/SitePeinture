@@ -29,6 +29,9 @@
 
             $scope.homeSuccess = false;
 
+            $scope.order = 'Title';
+            $scope.reverse = false;
+
             var Load = function () {
                 $http.get('service/painting').then(function (result) {
                     $scope.paints = result.data;
@@ -106,6 +109,27 @@
 
             $scope.Reload = function () {
                 Load();
+            };
+
+            $scope.Order = function (code) {
+                if ($scope.order === code) {
+                    $scope.reverse = !$scope.reverse;
+                } else {
+                    $scope.order = code;
+                    $scope.reverse = false;
+                }
+            };
+
+            $scope.IsOrder = function (code) {
+                if (code === $scope.order) {
+                    if ($scope.reverse) {
+                        return 'fa fa-caret-down pull-right';
+                    }
+
+                    return 'fa fa-caret-up pull-right';
+                }
+
+                return null;
             };
         }])
         .controller('AdminHomeController', ['$scope', '$http', function ($scope, $http) {

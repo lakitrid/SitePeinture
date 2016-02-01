@@ -39,5 +39,9 @@ namespace SitePeinture.Models
                 }
             }
         }
+
+        public int Price { get; set; }
+
+        public bool Available { get; set; }
     }
 }

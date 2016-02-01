@@ -35,13 +35,13 @@
         <div class="form-group" ng-class="{'has-error': eventForm.expiration.$invalid && (eventForm.expiration.$touched || eventForm.$submitted)}">
             <label class="col-sm-2 control-label">Expiration</label>
             <div class="col-sm-10">
-                <input type="date" class="form-control" name="expiration" ng-model="event.ExpirationDate" required>
+                <input date-time ng-model="event.ExpirationDate" view="date" min-view="date" max-view="year" format="dd/MM/yyyy">
             </div>
         </div>
         <div class="form-group" ng-class="{'has-error': eventForm.description.$invalid && (eventForm.description.$touched || eventForm.$submitted)}">
             <label for="description" class="col-sm-2 control-label">Description <a target="_blank" href="https://fr.wikipedia.org/wiki/Markdown">(syntaxe)</a></label>
             <div class="col-sm-10">
-                <textarea class="form-control resize-v" name="description" ng-model="event.Description" required/>
+                <textarea class="form-control resize-v" rows="6" name="description" ng-model="event.Description" required />
             </div>
             <label class="col-sm-2 control-label">Aperçu</label>
             <div class="col-sm-10" markdown="{{event.Description}}">
