@@ -12,6 +12,8 @@
       "password": ""
     },
     "to": "contact@edumortier.fr",
-    "from":  "contact@edumortier.fr"
-  }
+    "from": "contact@edumortier.fr"
+  },
+  "version": "v1.1.0",
+  "timeout": 10000
 }
