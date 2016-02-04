@@ -14,27 +14,27 @@
         </tr>
     </thead>
     <tbody>
-        <tr ng-repeat="paint in paints | orderBy:order:reverse" ng-mouseenter="paint.display = true" ng-mouseleave="paint.display = false">
+        <tr ng-repeat="paint in paints | orderBy:order:reverse">
             <td>
                 {{paint.Title}}
             </td>
-            <td class="hidden-sm hidden-xs">
+            <td class="hidden-sm">
                 {{paint.ThemeTitle}}
             </td>
             <td class="hidden-sm hidden-xs">
                 <input type="checkbox" ng-model="paint.OnSlider" disabled />
             </td>
-            <td class="hidden-sm hidden-xs">
+            <td class="hidden-sm">
                 <input type="checkbox" ng-model="paint.Available" disabled />
             </td>
             <td>
                 {{paint.Price}} €
             </td>
-            <td class="hidden-sm hidden-xs">
+            <td class="hidden-sm hidden-xs mouse_select" ng-click="paint.display = !paint.display">
                 {{paint.Filename}}
             </td>
             <td>
-                <img ng-src="images/tableaux/{{paint.Filename}}" class="img-responsive thumbnail" ng-show="paint.display" />
+                <img ng-src="images/tableaux/{{paint.Filename}}" class="img-responsive thumbnail" ng-show="paint.display" ng-click="paint.display = !paint.display" />
             </td>
             <td>
                 <i class="fa fa-pencil-square-o text-danger mouse_select" ng-click="Edit(paint)"></i>
