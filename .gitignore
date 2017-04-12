@@ -212,10 +212,10 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 # AutoGenerate Elements
-src/SitePeinture/wwwroot/app
-src/SitePeinture/wwwroot/lib
-src/SitePeinture/wwwroot/css
-src/SitePeinture/wwwroot/fonts
-src/SitePeinture/wwwroot/scripts
-src/SitePeinture/wwwroot/images/tableaux
-src/SitePeinture/Data
+SitePeinture/wwwroot/app
+SitePeinture/wwwroot/lib
+SitePeinture/wwwroot/css
+SitePeinture/wwwroot/fonts
+SitePeinture/wwwroot/scripts
+SitePeinture/wwwroot/images/tableaux
+SitePeinture/Data
