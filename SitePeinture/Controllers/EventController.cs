@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SitePeinture.Dao;
+using SitePeinture.Data;
 using SitePeinture.Models;
 using System;
 using System.Collections.Generic;
@@ -11,32 +11,33 @@ namespace SitePeinture.Controllers
     [Route("service/[controller]")]
     public class EventController
     {
-        public DaoEvent Dao { get; set; }
+        private ApplicationDbContext _context;
 
-        public EventController(DaoEvent dao)
+        public EventController(ApplicationDbContext context)
         {
-            this.Dao = Dao;
+            this._context = context;
         }
 
         // GET: api/values
         [HttpGet]
         public IEnumerable<Event> Get()
         {
-            return Dao.GetAll().ToArray();
+            return this._context.Events.ToArray();
         }
         
         [HttpGet]
         [Route("next")]
         public IEnumerable<Event> GetNextEvents()
         {
-            return Dao.GetAll().Where(d => d.ExpirationDate >= DateTime.Now.Date);
+            return this._context.Events.Where(d => d.ExpirationDate >= DateTime.Now.Date);
         }
 
         [HttpPost]
         [Authorize]
         public void Post([FromBody]Event value)
         {
-            Dao.Edit(value);
+
+            //Dao.Edit(value);
         }
 
         [HttpDelete]
@@ -44,7 +45,7 @@ namespace SitePeinture.Controllers
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {
-            Dao.Delete(id);
+            //Dao.Delete(id);
         }
     }
 }

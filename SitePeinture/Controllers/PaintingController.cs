@@ -1,58 +1,53 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SitePeinture.Dao;
 using SitePeinture.Models;
 using SitePeinture.Services;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace SitePeinture.Controllers
 {
     [Route("service/[controller]")]
     public class PaintingController : Controller
     {
-        public PaintingService PaintingService { get; set; }
-        
-        public DaoPainting Dao { get; set; }
+        private PaintingService _paintingService;
 
-        public PaintingController(PaintingService paintingService, DaoPainting dao)
+        public PaintingController(PaintingService paintingService)
         {
-            this.PaintingService = paintingService;
-            this.Dao = dao;
+            this._paintingService = paintingService;
         }
 
         [HttpGet]
         public IEnumerable<Painting> Get()
         {
-            return Dao.GetAll().ToArray();
+            return this._paintingService.GetAll();
         }
 
         [HttpGet]
         [Route("{id}")]
         public Painting Get(int id)
         {
-            return Dao.GetAll().Where(e => e.Id == id).FirstOrDefault();
+            return this._paintingService.GetById(id);
         }
 
         [HttpPost]
         [Authorize]
         public void Post([FromBody]Painting value)
         {
-            Dao.Edit(value);
+            this._paintingService.Edit(value);
         }
         
         [HttpGet]
         [Route("slider")]
         public IEnumerable<Painting> GetSliderPaints()
         {
-            return Dao.GetAll().Where(e => e.OnSlider).ToArray();
+            return this._paintingService.GetSliderPaints();
         }
 
         [HttpGet]
         [Route("theme/{id}")]
         public IEnumerable<Painting> GetPaintingByThemeId([FromRoute]int id)
         {
-            return Dao.GetAll().Where(e => e.ThemeId.Equals(id)).ToArray();
+            return this._paintingService.GetPaintingByThemeId(id);
         }
 
         [HttpDelete]
@@ -60,7 +55,7 @@ namespace SitePeinture.Controllers
         [Route("{id}")]
         public void Delete([FromRoute]int id)
         {
-            PaintingService.Delete(id);
+            _paintingService.Delete(id);
         }
     }
 }

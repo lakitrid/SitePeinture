@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using SitePeinture.Dao;
 using SitePeinture.Data;
 using SitePeinture.Models;
 using SitePeinture.Services;
@@ -31,7 +30,7 @@ namespace SitePeinture
         // Use this method to add services to the container
         public void ConfigureServices(IServiceCollection services)
         {
-            string connection = configuration.GetSection("connectionStrings:painting-local").Value;
+            string connection = configuration.GetSection("connectionStrings:painting").Value;
 
 
             // Add framework services.
@@ -43,9 +42,6 @@ namespace SitePeinture
                 .AddDefaultTokenProviders();
 
             services.AddTransient<IConfiguration>(_ => this.configuration);
-            services.AddTransient<DaoPainting>();
-            services.AddTransient<DaoTheme>();
-            services.AddTransient<DaoEvent>();
             services.AddTransient<UserService>();
             services.AddTransient<MailService>();
             services.AddTransient<PaintingService>();
@@ -55,10 +51,6 @@ namespace SitePeinture
         // Configure is called after ConfigureServices is called.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            // Check if the Db must be initialized
-            DaoBase dao = new DaoBase(configuration);
-            dao.Init();
-
             loggerFactory.AddConsole(configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 

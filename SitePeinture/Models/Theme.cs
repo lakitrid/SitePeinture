@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,16 +14,19 @@ namespace SitePeinture.Models
 
         public int ParentId { get; set; }
 
-        public string ParentTitle { get; set; }
+        public Theme ParentTheme { get; set; }
 
         public string Description { get; set; }
 
         public bool WithText { get; set; }
 
+        [NotMapped]
         public bool HasChildrenTheme { get; set; }
 
+        [NotMapped]
         public bool HasChildrenPainting { get; set; }
 
+        [NotMapped]
         internal bool HasParent
         {
             get
@@ -38,6 +42,7 @@ namespace SitePeinture.Models
             }
         }
 
+        [NotMapped]
         internal bool IsNew
         {
             get

@@ -29,5 +29,10 @@
     <DotNetCliToolReference Include="Microsoft.Extensions.SecretManager.Tools" Version="1.0.0" />
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="1.0.0" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <UserSecretsId>Painting-f7b1fa14-9b2a-4cfe-b9ce-7a9d0ff231ea</UserSecretsId>
+  </PropertyGroup>
 </Project>

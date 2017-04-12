@@ -51,7 +51,7 @@ namespace SitePeinture.Controllers
             {
                 return await this.UserService.Login(user.Login, user.Password);
             }
-            catch (Exception exc)
+            catch (Exception)
             {
                 return false;
             }

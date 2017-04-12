@@ -123,6 +123,74 @@ namespace SitePeinture.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("SitePeinture.Models.Event", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<DateTime>("ExpirationDate")
+                        .HasColumnName("Expiration");
+
+                    b.Property<DateTime>("ModificationDate")
+                        .HasColumnName("Modification");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Events");
+                });
+
+            modelBuilder.Entity("SitePeinture.Models.Painting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<bool>("Available");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("Filename");
+
+                    b.Property<bool>("OnSlider");
+
+                    b.Property<int>("Price");
+
+                    b.Property<int>("ThemeId");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ThemeId");
+
+                    b.ToTable("Paintings");
+                });
+
+            modelBuilder.Entity("SitePeinture.Models.Theme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<int>("ParentId");
+
+                    b.Property<int?>("ParentThemeId");
+
+                    b.Property<string>("Title");
+
+                    b.Property<bool>("WithText");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentThemeId");
+
+                    b.ToTable("Themes");
+                });
+
             modelBuilder.Entity("SitePeinture.Models.User", b =>
                 {
                     b.Property<string>("Id")
@@ -208,6 +276,21 @@ namespace SitePeinture.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SitePeinture.Models.Painting", b =>
+                {
+                    b.HasOne("SitePeinture.Models.Theme", "Theme")
+                        .WithMany()
+                        .HasForeignKey("ThemeId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("SitePeinture.Models.Theme", b =>
+                {
+                    b.HasOne("SitePeinture.Models.Theme", "ParentTheme")
+                        .WithMany()
+                        .HasForeignKey("ParentThemeId");
                 });
         }
     }
